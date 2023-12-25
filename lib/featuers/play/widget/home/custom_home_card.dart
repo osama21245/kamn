@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kman/featuers/benefits/screens/benefits_home_screen.dart';
 import 'package:kman/featuers/coaches-gyms/screens/coaches-gyms_home_screen.dart';
 import '../../screens/categories_screen.dart';
 
@@ -23,10 +24,11 @@ class CustomHomeCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (section == "Play") {
-          Get.to(CategoriesScreen());
-        }
-        if (section == "Coaches - Gym") {
-          Get.to(CoachesGymsHomeScreen());
+          Get.to(() => CategoriesScreen());
+        } else if (section == "Coaches - Gym") {
+          Get.to(() => CoachesGymsHomeScreen());
+        } else if (section == "Benefits") {
+          Get.to(() => BenefitsHomeScreen());
         }
       },
       child: ClipRRect(

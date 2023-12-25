@@ -7,8 +7,11 @@ class MedicalModel {
   final String id;
   final String userId;
   final String name;
-  final int rating;
+  final double raTing;
+  final String image;
   final String education;
+  final int price;
+  final String specialization;
   final String experience;
   final String benefits;
   final String whatAppNum;
@@ -17,8 +20,11 @@ class MedicalModel {
     required this.id,
     required this.userId,
     required this.name,
-    required this.rating,
+    required this.raTing,
+    required this.image,
     required this.education,
+    required this.price,
+    required this.specialization,
     required this.experience,
     required this.benefits,
     required this.whatAppNum,
@@ -29,8 +35,11 @@ class MedicalModel {
     String? id,
     String? userId,
     String? name,
-    int? rating,
+    double? raTing,
+    String? image,
     String? education,
+    int? price,
+    String? specialization,
     String? experience,
     String? benefits,
     String? whatAppNum,
@@ -40,8 +49,11 @@ class MedicalModel {
       id: id ?? this.id,
       userId: userId ?? this.userId,
       name: name ?? this.name,
-      rating: rating ?? this.rating,
+      raTing: raTing ?? this.raTing,
+      image: image ?? this.image,
       education: education ?? this.education,
+      price: price ?? this.price,
+      specialization: specialization ?? this.specialization,
       experience: experience ?? this.experience,
       benefits: benefits ?? this.benefits,
       whatAppNum: whatAppNum ?? this.whatAppNum,
@@ -54,8 +66,11 @@ class MedicalModel {
       'id': id,
       'userId': userId,
       'name': name,
-      'rating': rating,
+      'raTing': raTing,
+      'image': image,
       'education': education,
+      'price': price,
+      'specialization': specialization,
       'experience': experience,
       'benefits': benefits,
       'whatAppNum': whatAppNum,
@@ -68,8 +83,11 @@ class MedicalModel {
       id: map['id'] as String,
       userId: map['userId'] as String,
       name: map['name'] as String,
-      rating: map['rating'] as int,
+      raTing: map['raTing'] as double,
+      image: map['image'] as String,
       education: map['education'] as String,
+      price: map['price'] as int,
+      specialization: map['specialization'] as String,
       experience: map['experience'] as String,
       benefits: map['benefits'] as String,
       whatAppNum: map['whatAppNum'] as String,
@@ -84,7 +102,7 @@ class MedicalModel {
 
   @override
   String toString() {
-    return 'MedicalModel(id: $id, userId: $userId, name: $name, rating: $rating, education: $education, experience: $experience, benefits: $benefits, whatAppNum: $whatAppNum, discount: $discount)';
+    return 'MedicalModel(id: $id, userId: $userId, name: $name, raTing: $raTing, image: $image, education: $education, price: $price, specialization: $specialization, experience: $experience, benefits: $benefits, whatAppNum: $whatAppNum, discount: $discount)';
   }
 
   @override
@@ -94,8 +112,11 @@ class MedicalModel {
     return other.id == id &&
         other.userId == userId &&
         other.name == name &&
-        other.rating == rating &&
+        other.raTing == raTing &&
+        other.image == image &&
         other.education == education &&
+        other.price == price &&
+        other.specialization == specialization &&
         other.experience == experience &&
         other.benefits == benefits &&
         other.whatAppNum == whatAppNum &&
@@ -107,8 +128,11 @@ class MedicalModel {
     return id.hashCode ^
         userId.hashCode ^
         name.hashCode ^
-        rating.hashCode ^
+        raTing.hashCode ^
+        image.hashCode ^
         education.hashCode ^
+        price.hashCode ^
+        specialization.hashCode ^
         experience.hashCode ^
         benefits.hashCode ^
         whatAppNum.hashCode ^

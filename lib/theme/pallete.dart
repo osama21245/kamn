@@ -8,7 +8,7 @@ StateNotifierProvider<ThemeNotifier, ThemeData> themeNotiferProvider =
 class Pallete {
   // Colors
   static const blackColor = Color.fromRGBO(1, 1, 1, 1); // primary color
-  static const greyColor = Color.fromRGBO(182, 181, 181, 1); // sec
+  static const greyColor = Color.fromRGBO(165, 164, 164, 1); // sec
   static const lightgreyColor = Color.fromARGB(255, 226, 226, 226);
   static const lightgreyColor2 = Color.fromARGB(255, 204, 204, 204);
 
@@ -17,6 +17,8 @@ class Pallete {
   static const ratingColor = Color.fromARGB(255, 251, 255, 42);
   static const fontColor = Color(0xff272361);
   static var primaryColor = Color(0xff3a7cbd);
+  //Color.fromARGB(255, 129, 92, 214);
+
   static const badmention = Color(0xff5a7ebb);
   static const volleyball = Color(0xfff03636);
   static const basketball = Color(0xffeb811f);
@@ -24,6 +26,7 @@ class Pallete {
   static const football = Color(0xff21b846);
   static const tennis = Color(0xff98b229);
 
+  static const primaryGridentColors = [Color(0x5fffffff), Color(0xff3a7cbd)];
   static const footballGridentColors = [Color(0x5fffffff), Color(0x5f22b947)];
   static const paddelGridentColors = [Color(0x5fffffff), Color(0x5f542fab)];
   static const basketballlGridentColors = [

@@ -1,14 +1,23 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
+import 'package:kman/core/providers/firebase_providers.dart';
+import 'package:kman/edit_collaborator_state_screen.dart';
+import 'package:kman/featuers/auth/controller/auth_controller.dart';
 import 'package:kman/featuers/coaches-gyms/controller/coaches-gyms_controller.dart';
 import 'package:kman/models/coache_model.dart';
 import '../../../core/common/custom_uppersec.dart';
+import '../../../core/common/error_text.dart';
+import '../../../models/user_model.dart';
 import '../../../theme/pallete.dart';
+import '../../payment/screens/toggle_screen.dart';
 import '../../play/widget/play/showrating.dart';
 
 class CoachesDetailsScreen extends ConsumerStatefulWidget {
+  String collection;
   CoacheModel? coacheModel;
-  CoachesDetailsScreen({super.key, this.coacheModel});
+  CoachesDetailsScreen({super.key, this.coacheModel, required this.collection});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _CoachesDetailsState();
@@ -68,41 +77,47 @@ class _CoachesDetailsState extends ConsumerState<CoachesDetailsScreen> {
                       width: size.width,
                       child: Text(""),
                     ),
-                    Material(
-                      elevation: 5.0,
-                      borderRadius: BorderRadius.circular(size.width * 0.02),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Pallete.fontColor,
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(size.width * 0.02),
-                                bottomRight:
-                                    Radius.circular(size.width * 0.02))),
-                        height: size.height * 0.08,
-                        width: size.width,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.width * 0.03),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Book Now",
-                                style: TextStyle(
-                                    fontFamily: "Muller",
-                                    color: Pallete.whiteColor,
-                                    fontSize: size.width * 0.04,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                "${widget.coacheModel!.price}\$/Month",
-                                style: TextStyle(
-                                    fontFamily: "Muller",
-                                    color: Pallete.whiteColor,
-                                    fontSize: size.width * 0.04,
-                                    fontWeight: FontWeight.w600),
-                              )
-                            ],
+                    InkWell(
+                      onTap: () => Get.to(() => ToggleScreen(
+                            price: widget.coacheModel!.price * 100,
+                          )),
+                      child: Material(
+                        elevation: 5.0,
+                        borderRadius: BorderRadius.circular(size.width * 0.02),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Pallete.fontColor,
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft:
+                                      Radius.circular(size.width * 0.02),
+                                  bottomRight:
+                                      Radius.circular(size.width * 0.02))),
+                          height: size.height * 0.08,
+                          width: size.width,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.width * 0.03),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Book Now",
+                                  style: TextStyle(
+                                      fontFamily: "Muller",
+                                      color: Pallete.whiteColor,
+                                      fontSize: size.width * 0.04,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  "${widget.coacheModel!.price}\$/Month",
+                                  style: TextStyle(
+                                      fontFamily: "Muller",
+                                      color: Pallete.whiteColor,
+                                      fontSize: size.width * 0.04,
+                                      fontWeight: FontWeight.w600),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -123,8 +138,8 @@ class _CoachesDetailsState extends ConsumerState<CoachesDetailsScreen> {
                             child: CircleAvatar(
                                 backgroundColor: Pallete.primaryColor,
                                 radius: size.width * 0.2,
-                                backgroundImage: AssetImage(
-                                    "assets/page-1/images/coaches-gyms.png")),
+                                backgroundImage: CachedNetworkImageProvider(
+                                    widget.coacheModel!.photo)),
                           ),
                         )),
                     SizedBox(
@@ -315,6 +330,44 @@ class _CoachesDetailsState extends ConsumerState<CoachesDetailsScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: size.height * 0.03,
+                    ),
+                    if (widget.coacheModel!.userId == "")
+                      Padding(
+                        padding: EdgeInsets.only(left: size.width * 0.03),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () => Get.to(() =>
+                                  EditCollaboratorStateScreen(
+                                      collection: widget.collection,
+                                      userId: widget.coacheModel!.userId,
+                                      id: widget.coacheModel!.id)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    color: Colors.red,
+                                    child: Text(
+                                      "NOT ACTIVE",
+                                      maxLines: 3,
+                                      style: TextStyle(
+                                        wordSpacing: -0.4,
+                                        fontFamily: "Muller",
+                                        color: Pallete.whiteColor,
+                                        fontSize: size.width * 0.033,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 )),
                 Positioned(
@@ -327,7 +380,54 @@ class _CoachesDetailsState extends ConsumerState<CoachesDetailsScreen> {
                         "assets/page-1/images/whatsapp.png",
                         width: size.width * 0.1,
                       ),
-                    ))
+                    )),
+                if (widget.coacheModel!.userId != "")
+                  ref
+                      .watch(
+                          getUserDataFutureProvider(widget.coacheModel!.userId))
+                      .when(data: (userModel) {
+                    return Positioned(
+                        left: size.width * 0.05,
+                        top: size.height * 0.13,
+                        child: InkWell(
+                            onTap: () {},
+                            child:
+                                userModel.points >= 0 && userModel.points < 100
+                                    ? Image.asset(
+                                        "assets/page-1/images/level1.png",
+                                        width: size.width * 0.1,
+                                      )
+                                    : userModel.points >= 100 &&
+                                            userModel!.points < 400
+                                        ? Image.asset(
+                                            "assets/page-1/images/level2.png",
+                                            width: size.width * 0.1,
+                                          )
+                                        : userModel.points >= 400 &&
+                                                userModel.points < 700
+                                            ? Image.asset(
+                                                "assets/page-1/images/level3.png",
+                                                width: size.width * 0.1,
+                                              )
+                                            : userModel.points >= 400 &&
+                                                    userModel.points < 700
+                                                ? Image.asset(
+                                                    "assets/page-1/images/level4.png",
+                                                    width: size.width * 0.1,
+                                                  )
+                                                : Image.asset(
+                                                    "assets/page-1/images/level5.png",
+                                                    width: size.width * 0.1,
+                                                  )));
+                  }, error: (error, StackTrace) {
+                    print(error);
+
+                    return ErrorText(error: error.toString());
+                  }, loading: () {
+                    return Center(
+                      child: Column(),
+                    );
+                  }),
               ],
             ),
           ),

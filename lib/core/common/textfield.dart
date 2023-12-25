@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../theme/pallete.dart';
+import '../../theme/pallete.dart';
 
-class TextFiledAuth extends ConsumerWidget {
+class TextFiled extends ConsumerWidget {
   String name;
-
+  Color color;
   bool? ispassword;
   bool? istakenum;
   String? Function(String?)? validator;
   TextEditingController controller;
-  TextFiledAuth(
+  TextFiled(
       {super.key,
       required this.name,
+      required this.color,
       this.ispassword,
       this.istakenum,
       required this.controller,

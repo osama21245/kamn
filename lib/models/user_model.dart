@@ -9,7 +9,7 @@ class UserModel {
   final String uid;
   final String phone;
   final bool isAuthanticated;
-  final int points;
+  int points;
   final bool isonline;
   final bool isactive;
   final List<dynamic> followers;

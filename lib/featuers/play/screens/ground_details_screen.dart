@@ -47,6 +47,7 @@ class GroundDetailsScreen extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Get.to(BookingScreen(
+                    groundImage: groundModel!.groundImage,
                     collection: collection,
                     groundId: groundModel!.id,
                     color: color,

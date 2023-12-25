@@ -24,10 +24,12 @@ class HandlingDataView extends StatelessWidget {
             ),
           )
         : statusRequest == StatusRequest.loading2
-            ? LottieBuilder.asset(
-                height: 30,
-                AppImageAsset.loading,
-                repeat: true,
+            ? Center(
+                child: LottieBuilder.asset(
+                  AppImageAsset.loading,
+                  repeat: true,
+                  fit: BoxFit.contain,
+                ),
               )
             : statusRequest == StatusRequest.offlinefaliure
                 ? Center(

@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:kman/HandlingDataView.dart';
 import 'package:kman/core/class/statusrequest.dart';
 import 'package:kman/core/common/getcolor.dart';
 import 'package:kman/featuers/auth/controller/auth_controller.dart';
-import 'package:kman/featuers/play/delegates/search_ground_delegate.dart';
+import 'package:kman/featuers/play/delegates/search_basketground_delegate%20copy.dart';
+import 'package:kman/featuers/play/delegates/search_footballground_delegate.dart';
+import 'package:kman/featuers/play/delegates/search_volleyground_delegate.dart';
+import 'package:kman/featuers/play/screens/ground_add_screen.dart';
 import 'package:kman/featuers/play/widget/play/custom_play_middlesec.dart';
 import 'package:kman/featuers/play/widget/play/custom_play_serarch.dart';
 import 'package:kman/core/common/custom_uppersec.dart';
 import 'package:kman/featuers/play/widget/play/custom_play_grident.dart';
 import 'package:kman/theme/pallete.dart';
 import '../../../core/providers/checkInternet.dart';
+import '../delegates/search_paddelground_delegate.dart';
 import '../widget/play/custom_get_grounds.dart';
 
 class PlayHomeScreen extends ConsumerStatefulWidget {
-  final String? collection;
+  final String collection;
   const PlayHomeScreen({super.key, required this.collection});
 
   @override
@@ -55,9 +60,17 @@ class _PlayHomeScreenState extends ConsumerState<PlayHomeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final color = getColor(widget.collection!);
-    //final user = ref.read(usersProvider);
+    final user = ref.read(usersProvider);
     List<Color> backGroundGridentColor = getGrediantColors(widget.collection!);
     return Scaffold(
+      floatingActionButton: status == PlayFilterStatus.Grounds
+          ? FloatingActionButton(
+              backgroundColor: color,
+              onPressed: () =>
+                  Get.to(() => AddGroundScreen(collection: widget.collection)),
+              child: Icon(Icons.add),
+            )
+          : null,
       body: SafeArea(
         child: CustomGridentBackground(
           colors: backGroundGridentColor,
@@ -84,13 +97,37 @@ class _PlayHomeScreenState extends ConsumerState<PlayHomeScreen> {
               InkWell(
                   onTap: () => showSearch(
                       context: context,
-                      delegate: SearchGroundDelegate(
-                        ref,
-                        widget.collection!,
-                        color,
-                        backGroundGridentColor,
-                        size,
-                      )),
+                      delegate: widget.collection == "football"
+                          ? SearchFootballGroundDelegate(
+                              ref,
+                              widget.collection!,
+                              color,
+                              backGroundGridentColor,
+                              size,
+                            )
+                          : widget.collection == "basketball"
+                              ? SearchBasketBallGroundDelegate(
+                                  ref,
+                                  widget.collection!,
+                                  color,
+                                  backGroundGridentColor,
+                                  size,
+                                )
+                              : widget.collection == "padel"
+                                  ? SearchPaddelGroundDelegate(
+                                      ref,
+                                      widget.collection!,
+                                      color,
+                                      backGroundGridentColor,
+                                      size,
+                                    )
+                                  : SearchVolleyBallGroundDelegate(
+                                      ref,
+                                      widget.collection!,
+                                      color,
+                                      backGroundGridentColor,
+                                      size,
+                                    )),
                   child: CustomPlaySearch(
                     size: size,
                     category: "Playground",

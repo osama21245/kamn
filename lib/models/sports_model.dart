@@ -4,13 +4,17 @@ import 'dart:convert';
 class SportsModel {
   final String id;
   final String name;
+  final String image;
   final int discount;
+  final double rating;
   final String about;
   final String storelink;
   SportsModel({
     required this.id,
     required this.name,
+    required this.image,
     required this.discount,
+    required this.rating,
     required this.about,
     required this.storelink,
   });
@@ -18,14 +22,18 @@ class SportsModel {
   SportsModel copyWith({
     String? id,
     String? name,
+    String? image,
     int? discount,
+    double? rating,
     String? about,
     String? storelink,
   }) {
     return SportsModel(
       id: id ?? this.id,
       name: name ?? this.name,
+      image: image ?? this.image,
       discount: discount ?? this.discount,
+      rating: rating ?? this.rating,
       about: about ?? this.about,
       storelink: storelink ?? this.storelink,
     );
@@ -35,7 +43,9 @@ class SportsModel {
     return <String, dynamic>{
       'id': id,
       'name': name,
+      'image': image,
       'discount': discount,
+      'rating': rating,
       'about': about,
       'storelink': storelink,
     };
@@ -45,7 +55,9 @@ class SportsModel {
     return SportsModel(
       id: map['id'] as String,
       name: map['name'] as String,
+      image: map['image'] as String,
       discount: map['discount'] as int,
+      rating: map['rating'] as double,
       about: map['about'] as String,
       storelink: map['storelink'] as String,
     );
@@ -58,7 +70,7 @@ class SportsModel {
 
   @override
   String toString() {
-    return 'SportsModel(id: $id, name: $name, discount: $discount, about: $about, storelink: $storelink)';
+    return 'SportsModel(id: $id, name: $name, image: $image, discount: $discount, rating: $rating, about: $about, storelink: $storelink)';
   }
 
   @override
@@ -67,7 +79,9 @@ class SportsModel {
 
     return other.id == id &&
         other.name == name &&
+        other.image == image &&
         other.discount == discount &&
+        other.rating == rating &&
         other.about == about &&
         other.storelink == storelink;
   }
@@ -76,7 +90,9 @@ class SportsModel {
   int get hashCode {
     return id.hashCode ^
         name.hashCode ^
+        image.hashCode ^
         discount.hashCode ^
+        rating.hashCode ^
         about.hashCode ^
         storelink.hashCode;
   }

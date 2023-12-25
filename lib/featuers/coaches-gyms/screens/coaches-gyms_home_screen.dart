@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:kman/HandlingDataView.dart';
 import 'package:kman/core/common/custom_uppersec.dart';
 import 'package:kman/featuers/auth/controller/auth_controller.dart';
-import 'package:kman/featuers/coaches-gyms/controller/coaches-gyms_controller.dart';
+import 'package:kman/featuers/coaches-gyms/screens/coach_add_screen.dart';
+import 'package:kman/featuers/coaches-gyms/screens/gym_add_screen.dart';
 import 'package:kman/featuers/coaches-gyms/widget/coaches-gyms_home/custom_get_coaches.dart';
 import 'package:kman/featuers/coaches-gyms/widget/coaches-gyms_home/custom_get_gyms.dart';
 import 'package:kman/theme/pallete.dart';
@@ -43,14 +45,6 @@ class _CoachesGymsHomeScreenState extends ConsumerState<CoachesGymsHomeScreen> {
     }
   }
 
-  setGym(WidgetRef ref) {
-    ref.watch(coachesGymsControllerProvider.notifier).setGyms(context);
-  }
-
-  // setCoaches(WidgetRef ref) {
-  //   ref.watch(coachesGymsControllerProvider.notifier).setCoache(context);
-  // }
-
   @override
   void initState() {
     checkinternet();
@@ -62,6 +56,16 @@ class _CoachesGymsHomeScreenState extends ConsumerState<CoachesGymsHomeScreen> {
     final user = ref.read(usersProvider);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (status == CoachesGymsFilterStatus.Coaches) {
+            Get.to(() => AddCoachScreen());
+          } else {
+            Get.to(() => AddgymScreen());
+          }
+        },
+        child: Icon(Icons.add),
+      ),
       body: SafeArea(
         child: Column(
           children: [

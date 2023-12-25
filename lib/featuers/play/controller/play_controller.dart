@@ -1,13 +1,16 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kman/core/class/reservisionParameters.dart';
 import 'package:kman/core/class/searchParameters.dart';
 import 'package:kman/core/class/statusrequest.dart';
-import 'package:kman/core/providers/checkInternet.dart';
+import 'package:kman/featuers/auth/controller/auth_controller.dart';
 import 'package:kman/homemain.dart';
 import 'package:kman/models/reserved_model.dart';
+import 'package:kman/models/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kman/featuers/play/repositories/play_repository.dart';
@@ -15,18 +18,27 @@ import 'package:kman/models/grounds_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../../core/constants/routesname.dart';
+import '../../../core/data/payment_data.dart';
+import '../../../core/providers/handlingdata.dart';
 import '../../../core/providers/storage_repository.dart';
 import '../../../core/providers/utils.dart';
 import '../screens/animated_reservision_screen.dart';
 
+final getSearchFootballGrounds = StreamProvider.family((ref, String query) =>
+    ref.watch(playControllerProvider.notifier).searcFootballhGrounds(query));
+
+final getSearchBasketballGrounds = StreamProvider.family((ref, String query) =>
+    ref.watch(playControllerProvider.notifier).searcBasketBallhGrounds(query));
+
+final getSearchPaddelGrounds = StreamProvider.family((ref, String query) =>
+    ref.watch(playControllerProvider.notifier).searcBasketBallhGrounds(query));
+
+final getSearchVolleyBallGrounds = StreamProvider.family((ref, String query) =>
+    ref.watch(playControllerProvider.notifier).searchVolleyBallhGrounds(query));
+
 final getGroundsProvider = StreamProvider.family((ref, String collection) =>
     ref.watch(playControllerProvider.notifier).getGrounds(collection));
-
-final getSearchGrounds = StreamProvider.family((ref, String query) =>
-    ref.watch(playControllerProvider.notifier).searchGrounds(query));
-
-final getUserGroundsProvider = StreamProvider(
-    (ref) => ref.watch(playControllerProvider.notifier).getuserGrounds());
 
 final getreservisionsProvider = StreamProvider.family((
   ref,
@@ -48,6 +60,8 @@ final getreservisionsProvider = StreamProvider.family((
   });
   return streamController.stream;
 });
+final getuserreserve = FutureProvider.family((ref, String uid) =>
+    ref.watch(playControllerProvider.notifier).getuserreserve(uid));
 
 final playControllerProvider =
     StateNotifierProvider<playController, StatusRequest>((ref) =>
@@ -71,15 +85,28 @@ class playController extends StateNotifier<StatusRequest> {
         super(StatusRequest.success);
 
   void reserve(String groundId, BuildContext context, String collection,
-      ReserveModel reserveModel) async {
+      ReserveModel reserveModel, int points) async {
+    final user = _ref.watch(usersProvider);
+
     state = StatusRequest.loading;
-    final res =
-        await _playRepository.reserve(groundId, collection, reserveModel);
+    final res = await _playRepository.reserve(
+        groundId, collection, reserveModel, user!.uid, points);
     state = StatusRequest.success;
-    res.fold((l) => showSnackBar(l.toString(), context), (r) {
-      Get.to(AnimatedReservisionScreen());
+    res.fold((l) => showSnackBar(l.toString(), context), (r) async {
+      UserModel user2 = user;
+      user2.points = points;
+      await _ref.watch(usersProvider.notifier).update((state) => user2);
+      await saveUserModelToPrefs(user2);
+      Get.to(() => AnimatedReservisionScreen());
       showSnackBar("Your reserve Added Succefuly", context);
     });
+  }
+
+  Future<void> saveUserModelToPrefs(UserModel userModel) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Convert UserModel to JSON and save it in shared preferences
+    String userModelJson = json.encode(userModel.toJson());
+    prefs.setString('userModel', userModelJson);
   }
 
   void gpsTracking(double long, double lat, BuildContext context) async {
@@ -101,24 +128,30 @@ class playController extends StateNotifier<StatusRequest> {
   }
 
   void joinGame(String collection, String groundId, String reserveId,
-      BuildContext context) async {
-    final userId = "osama";
-    final res =
-        await _playRepository.joinGame(collection, groundId, reserveId, userId);
-    res.fold((l) => showSnackBar(l.message, context), (r) {
-      //  Get.to(HomeMain());
+      BuildContext context, int points) async {
+    final user = _ref.watch(usersProvider);
+    final res = await _playRepository.joinGame(
+        collection, groundId, reserveId, user!.uid, points);
+    res.fold((l) => showSnackBar(l.message, context), (r) async {
+      UserModel user2 = user;
+      user2.points = points;
+      await _ref.watch(usersProvider.notifier).update((state) => user2);
+      await saveUserModelToPrefs(user2);
       showSnackBar("You join succefuly", context);
     });
   }
 
   void leaveGame(String collection, String groundId, String reserveId,
-      BuildContext context) async {
-    final userId = "osama";
+      BuildContext context, int points) async {
+    final user = _ref.watch(usersProvider);
     final res = await _playRepository.leaveGame(
-        collection, groundId, reserveId, userId);
+        collection, groundId, reserveId, user!.uid, points);
 
-    res.fold((l) => showSnackBar(l.message, context), (r) {
-      //  Get.to(HomeMain());
+    res.fold((l) => showSnackBar(l.message, context), (r) async {
+      UserModel user2 = user;
+      user2.points = points;
+      await saveUserModelToPrefs(user2);
+      await _ref.watch(usersProvider.notifier).update((state) => user2);
       showSnackBar("You Leave The Game", context);
     });
   }
@@ -133,13 +166,26 @@ class playController extends StateNotifier<StatusRequest> {
         reservationsParams.groundId, reservationsParams.day);
   }
 
-  Stream<List<GroundModel>> searchGrounds(String query) {
+  Future<List<ReserveModel>> getuserreserve(String uid) {
+    return _playRepository.getUserreserve(uid);
+  }
+
+  //**************************search*******************************************
+
+  Stream<List<GroundModel>> searcFootballhGrounds(String query) {
     return _playRepository.searchFootballGrounds(query);
   }
 
-  Stream<List<ReserveModel>> getuserGrounds() {
-    String userId = "";
-    return _playRepository.getuserGrounds(userId);
+  Stream<List<GroundModel>> searcBasketBallhGrounds(String query) {
+    return _playRepository.searchBasketBallGrounds(query);
+  }
+
+  Stream<List<GroundModel>> searcPaddelGrounds(String query) {
+    return _playRepository.searchPadelGrounds(query);
+  }
+
+  Stream<List<GroundModel>> searchVolleyBallhGrounds(String query) {
+    return _playRepository.searchVolleyBallGrounds(query);
   }
 
   //**************************futuers only for ground owner*******************************************
@@ -154,6 +200,7 @@ class playController extends StateNotifier<StatusRequest> {
       String collection,
       int groundPlayersNum) async {
     state = StatusRequest.loading;
+    String groundownerId = _ref.watch(usersProvider)!.uid;
     String id = Uuid().v1();
     String address;
     Position position;
@@ -181,16 +228,15 @@ class playController extends StateNotifier<StatusRequest> {
 //set data
     if (groundImage != "") {
       GroundModel groundModel = GroundModel(
-          groundnumber: "01220065480",
+          groundnumber: phone,
           rating: 0,
           groundPlayersNum: groundPlayersNum,
           id: id,
           name: name,
           address: address,
-          groundOwnerId: "soon",
+          groundOwnerId: groundownerId,
           groundImage: groundImage,
           price: price,
-          ownerNum: phone,
           futuers: futures,
           long: position.longitude,
           lat: position.latitude);
@@ -203,17 +249,21 @@ class playController extends StateNotifier<StatusRequest> {
   }
 
   void setResrvision(String groundId, BuildContext context, String collection,
-      int maxPlayersNum, String time, String day) async {
+      int maxPlayersNum, String time, String day, String groundImage) async {
     state = StatusRequest.loading;
+    final user = _ref.watch(usersProvider)!.uid;
     String id = Uuid().v1();
 
     ReserveModel reserveModel = ReserveModel(
         maxPlayersNum: maxPlayersNum,
         category: collection,
+        isJoiner: false,
+        groundImage: groundImage,
         targetplayesNum: 0,
         id: id,
         groundId: groundId,
-        userId: "userId",
+        userId: groundImage,
+        reservisionMakerId: user,
         iscomplete: true,
         collaborations: [],
         time: time,

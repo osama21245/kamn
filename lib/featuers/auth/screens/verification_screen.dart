@@ -7,9 +7,8 @@ import 'package:kman/featuers/auth/controller/auth_controller.dart';
 import '../../../theme/pallete.dart';
 
 class VerficationScreen extends ConsumerStatefulWidget {
-  VerficationScreen({
-    super.key,
-  });
+  String? phone;
+  VerficationScreen({super.key, this.phone});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -20,13 +19,13 @@ class _VerficationScreenState extends ConsumerState<VerficationScreen> {
   getSms(WidgetRef ref) {
     ref
         .watch(authControllerProvider.notifier)
-        .verifyPhone(context, "01225641777");
+        .verifyPhone(context, widget.phone!);
   }
 
   getCode(WidgetRef ref, String code) {
     ref
         .watch(authControllerProvider.notifier)
-        .sendCode(code, context, "01225641777");
+        .sendCode(code, context, widget.phone!);
   }
 
   // @override
@@ -37,6 +36,9 @@ class _VerficationScreenState extends ConsumerState<VerficationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getSms(ref);
+    });
     Size size = MediaQuery.of(context).size;
     StatusRequest statusRequest = ref.watch(authControllerProvider);
     return Scaffold(
@@ -151,13 +153,6 @@ class _VerficationScreenState extends ConsumerState<VerficationScreen> {
             SizedBox(
               height: size.height * 0.035,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.height * 0.18),
-              child: Image.asset(
-                "assets/page-1/images/step2.png",
-                width: size.width * 0.15,
-              ),
-            )
           ],
         ),
       ),

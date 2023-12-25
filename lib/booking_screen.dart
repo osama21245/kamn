@@ -12,10 +12,15 @@ import 'featuers/play/controller/play_controller.dart';
 class BookingScreen extends ConsumerStatefulWidget {
   String? collection;
   String? groundId;
+  String? groundImage;
   Color? color;
   int? playersMaxNum;
   BookingScreen(
-      {this.collection, this.groundId, this.color, this.playersMaxNum});
+      {this.collection,
+      this.groundId,
+      this.color,
+      this.playersMaxNum,
+      this.groundImage});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _BookingScreenState();
@@ -31,8 +36,14 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
 
   void setReservision(
       WidgetRef ref, BuildContext context, String time, String day) {
-    ref.watch(playControllerProvider.notifier).setResrvision(widget.groundId!,
-        context, widget.collection!, widget.playersMaxNum!, time, day);
+    ref.watch(playControllerProvider.notifier).setResrvision(
+        widget.groundId!,
+        context,
+        widget.collection!,
+        widget.playersMaxNum!,
+        time,
+        day,
+        widget.groundImage!);
   }
 
   @override

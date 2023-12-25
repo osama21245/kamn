@@ -1,13 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
 class ReserveModel {
   String id;
   String groundId;
   String userId;
+  String reservisionMakerId;
+  String groundImage;
   bool iscomplete;
+  bool isJoiner;
   List<dynamic> collaborations;
   int maxPlayersNum;
   String category;
@@ -19,7 +23,10 @@ class ReserveModel {
     required this.id,
     required this.groundId,
     required this.userId,
+    required this.reservisionMakerId,
+    required this.groundImage,
     required this.iscomplete,
+    required this.isJoiner,
     required this.collaborations,
     required this.maxPlayersNum,
     required this.category,
@@ -33,7 +40,10 @@ class ReserveModel {
     String? id,
     String? groundId,
     String? userId,
+    String? reservisionMakerId,
+    String? groundImage,
     bool? iscomplete,
+    bool? isJoiner,
     List<dynamic>? collaborations,
     int? maxPlayersNum,
     String? category,
@@ -46,7 +56,10 @@ class ReserveModel {
       id: id ?? this.id,
       groundId: groundId ?? this.groundId,
       userId: userId ?? this.userId,
+      reservisionMakerId: reservisionMakerId ?? this.reservisionMakerId,
+      groundImage: groundImage ?? this.groundImage,
       iscomplete: iscomplete ?? this.iscomplete,
+      isJoiner: isJoiner ?? this.isJoiner,
       collaborations: collaborations ?? this.collaborations,
       maxPlayersNum: maxPlayersNum ?? this.maxPlayersNum,
       category: category ?? this.category,
@@ -62,7 +75,10 @@ class ReserveModel {
       'id': id,
       'groundId': groundId,
       'userId': userId,
+      'reservisionMakerId': reservisionMakerId,
+      'groundImage': groundImage,
       'iscomplete': iscomplete,
+      'isJoiner': isJoiner,
       'collaborations': collaborations,
       'maxPlayersNum': maxPlayersNum,
       'category': category,
@@ -78,7 +94,10 @@ class ReserveModel {
       id: map['id'] as String,
       groundId: map['groundId'] as String,
       userId: map['userId'] as String,
+      reservisionMakerId: map['reservisionMakerId'] as String,
+      groundImage: map['groundImage'] as String,
       iscomplete: map['iscomplete'] as bool,
+      isJoiner: map['isJoiner'] as bool,
       collaborations:
           List<dynamic>.from((map['collaborations'] as List<dynamic>)),
       maxPlayersNum: map['maxPlayersNum'] as int,
@@ -97,17 +116,21 @@ class ReserveModel {
 
   @override
   String toString() {
-    return 'ReserveModel(id: $id, groundId: $groundId, userId: $userId, iscomplete: $iscomplete, collaborations: $collaborations, maxPlayersNum: $maxPlayersNum, category: $category, time: $time, day: $day, targetplayesNum: $targetplayesNum, isresrved: $isresrved)';
+    return 'ReserveModel(id: $id, groundId: $groundId, userId: $userId, reservisionMakerId: $reservisionMakerId, groundImage: $groundImage, iscomplete: $iscomplete, isJoiner: $isJoiner, collaborations: $collaborations, maxPlayersNum: $maxPlayersNum, category: $category, time: $time, day: $day, targetplayesNum: $targetplayesNum, isresrved: $isresrved)';
   }
 
   @override
   bool operator ==(covariant ReserveModel other) {
     if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
 
     return other.id == id &&
         other.groundId == groundId &&
         other.userId == userId &&
+        other.reservisionMakerId == reservisionMakerId &&
+        other.groundImage == groundImage &&
         other.iscomplete == iscomplete &&
+        other.isJoiner == isJoiner &&
         listEquals(other.collaborations, collaborations) &&
         other.maxPlayersNum == maxPlayersNum &&
         other.category == category &&
@@ -122,7 +145,10 @@ class ReserveModel {
     return id.hashCode ^
         groundId.hashCode ^
         userId.hashCode ^
+        reservisionMakerId.hashCode ^
+        groundImage.hashCode ^
         iscomplete.hashCode ^
+        isJoiner.hashCode ^
         collaborations.hashCode ^
         maxPlayersNum.hashCode ^
         category.hashCode ^

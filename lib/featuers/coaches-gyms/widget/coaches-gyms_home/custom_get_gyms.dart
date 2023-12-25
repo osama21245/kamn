@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
+import 'package:kman/featuers/coaches-gyms/screens/gym_details_screen.dart';
 import 'package:kman/featuers/coaches-gyms/widget/coaches-gyms_home/custom_gyms_card.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../core/common/error_text.dart';
@@ -18,8 +20,10 @@ class CustomGetGyms extends ConsumerWidget {
                   itemBuilder: (context, i) {
                     final gym = gyms[i];
                     return InkWell(
-                        onTap: () {},
-                        // Get.to(CoachesDetailsScreen(coacheModel: coach)),
+                        onTap: () => Get.to(() => GymDetailsScreen(
+                              gymModel: gym,
+                              collection: "gym",
+                            )),
                         child: CustomGymCard(
                           gymModel: gym,
                         ));

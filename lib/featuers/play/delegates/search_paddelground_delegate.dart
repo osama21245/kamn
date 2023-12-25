@@ -8,14 +8,14 @@ import 'package:kman/featuers/play/screens/ground_details_screen.dart';
 import '../../../core/common/error_text.dart';
 import '../../../core/common/loader.dart';
 
-class SearchGroundDelegate extends SearchDelegate {
+class SearchPaddelGroundDelegate extends SearchDelegate {
   final WidgetRef ref;
   final String collection;
   final Color color;
   final List<Color> backGorundColor;
   final Size size;
 
-  SearchGroundDelegate(
+  SearchPaddelGroundDelegate(
     this.ref,
     this.collection,
     this.color,
@@ -48,7 +48,7 @@ class SearchGroundDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     SearchParameters searchParameters = SearchParameters(collection, query);
-    return ref.watch(getSearchGrounds(query)).when(
+    return ref.watch(getSearchPaddelGrounds(query)).when(
           data: (grounds) => ListView.builder(
             itemCount: grounds.length,
             itemBuilder: (BuildContext context, int index) {

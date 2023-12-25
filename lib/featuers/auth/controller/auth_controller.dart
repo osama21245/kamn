@@ -1,18 +1,21 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:kman/core/class/statusrequest.dart';
+import 'package:kman/core/constants/services/services.dart';
 import 'package:kman/featuers/auth/screens/finish_screen.dart';
 import 'package:kman/featuers/auth/screens/login_screen.dart';
 import 'package:kman/homemain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/constants/constants.dart';
+import '../../../core/providers/storage_repository.dart';
 import '../../../core/utils.dart';
+import '../../../models/reserved_model.dart';
 import '../../../models/user_model.dart';
 import '../repositories/auth_repository.dart';
 
@@ -25,6 +28,13 @@ final getUserDataProvider = StreamProvider.family((ref, String uid) {
   final authcontroller = ref.watch(authControllerProvider.notifier);
   return authcontroller.getUserData(uid);
 });
+final getUserDataFutureProvider = FutureProvider.family((ref, String uid) {
+  final authcontroller = ref.watch(authControllerProvider.notifier);
+  return authcontroller.getUserFutureData(uid);
+});
+
+final getUserReservisionss = StreamProvider(
+    (ref) => ref.watch(authControllerProvider.notifier).getUserResevisions());
 
 StateProvider<UserModel?> usersProvider =
     StateProvider<UserModel?>((ref) => null);
@@ -32,30 +42,44 @@ StateProvider<UserModel?> usersProvider =
 StateNotifierProvider<AuthController, StatusRequest> authControllerProvider =
     StateNotifierProvider<AuthController, StatusRequest>((ref) =>
         AuthController(
-            authRepository: ref.watch(AuthRepositoryProvider), ref: ref));
+            authRepository: ref.watch(AuthRepositoryProvider),
+            ref: ref,
+            storageRepository: ref.watch(storageRepositoryProvider)));
 
 class AuthController extends StateNotifier<StatusRequest> {
   final Ref _ref;
   final AuthRepository _authRepository;
-  AuthController({required AuthRepository authRepository, required Ref ref})
+  final StorageRepository _storageRepository;
+  AuthController(
+      {required AuthRepository authRepository,
+      required Ref ref,
+      required StorageRepository storageRepository})
       : _authRepository = authRepository,
         _ref = ref,
+        _storageRepository = storageRepository,
         super(StatusRequest.success);
+  bool? inUpdate;
+  UserModel? userModel;
 
   Stream<User?> get authStateChange => _authRepository.authStateChange;
 
   Stream<UserModel> getUserData(String uid) {
     return _authRepository.getUserData(uid);
   }
-// final usersProvider = StateProvider<UserModel?>((ref) {
-//   // Load the UserModel from shared preferences when the app starts
-//   return _loadUserModelFromPrefs();
-// });
 
-  Future<UserModel?> _loadUserModelFromPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Retrieve the UserModel from shared preferences
-    String? userModelJson = prefs.getString('userModel');
+  Future<UserModel> getUserFutureData(String uid) {
+    return _authRepository.getUserDataFuture(uid);
+  }
+
+  Stream<List<ReserveModel>> getUserResevisions() {
+    final user = _ref.watch(usersProvider);
+    return _authRepository.getUserResevisions(user!.uid);
+  }
+
+  UserModel? loadUserModelFromPrefs() {
+    MyServices myServices =
+        Get.find(); // Retrieve the UserModel from shared preferences
+    String? userModelJson = myServices.sharedPreferences.getString('userModel');
     if (userModelJson != null) {
       // If UserModel exists in shared preferences, parse and return it
       return UserModel.fromJson(json.decode(userModelJson));
@@ -76,10 +100,12 @@ class AuthController extends StateNotifier<StatusRequest> {
     state = StatusRequest.loading;
     final user = await _authRepository.signinWithGoogle(isFromLogin);
     state = StatusRequest.success;
-
+    MyServices myServices = Get.find();
     user.fold((l) => showSnackBar(l.message, context), (userModel) async {
+      myServices.sharedPreferences.setString("step", "2");
       await _ref.read(usersProvider.notifier).update((state) => userModel);
-      Get.offAll(HomeMain());
+      await saveUserModelToPrefs(userModel);
+      Get.offAll(() => HomeMain());
     });
   }
 
@@ -87,9 +113,43 @@ class AuthController extends StateNotifier<StatusRequest> {
     state = StatusRequest.loading;
     final user = await _authRepository.signInAsGuest();
     state = StatusRequest.success;
+    MyServices myServices = Get.find();
 
     user.fold((l) => showSnackBar(l.message, context), (userModel) async {
+      myServices.sharedPreferences.setString("step", "2");
       _ref.read(usersProvider.notifier).update((state) => userModel);
+    });
+  }
+
+  void editUser(
+      {required File? profileFile,
+      required BuildContext context,
+      required UserModel userModel,
+      required WidgetRef ref}) async {
+    state = StatusRequest.loading;
+
+    if (profileFile != null) {
+      final res = await _storageRepository.storeFile(
+          path: "user/profile", id: userModel.name, file: profileFile);
+
+      res.fold((l) => showSnackBar(l.toString(), context),
+          (r) => userModel = userModel.copyWith(profilePic: r));
+    }
+
+    final res = await _authRepository.editUser(userModel);
+    state = StatusRequest.success;
+
+    res.fold((l) => showSnackBar(l.message, context), (r) async {
+      await saveUserModelToPrefs(userModel);
+      await ref.read(usersProvider.notifier).update((state) => userModel);
+      Get.back();
+    });
+  }
+
+  getAppState() async {
+    final res = await _authRepository.getAppStatus();
+    res.fold((l) {}, (r) {
+      inUpdate = r;
     });
   }
 
@@ -142,12 +202,10 @@ class AuthController extends StateNotifier<StatusRequest> {
     });
   }
 
-  void getAnyUserData(String email, BuildContext context) async {
+  getAnyUserData(String email, BuildContext context) async {
     final res = await _authRepository.getAnyUserData(email);
-    res.fold((l) => showSnackBar(l.message, context), (userModel) async {
-      await _ref.read(usersProvider.notifier).update((state) => userModel);
-
-      Get.offAll(HomeMain());
+    res.fold((l) => showSnackBar(l.message, context), (r) {
+      userModel = r;
     });
   }
 
@@ -156,32 +214,43 @@ class AuthController extends StateNotifier<StatusRequest> {
     state = StatusRequest.loading;
     final res =
         await _authRepository.signInWithEmailAndPassword(email, password);
+    state = StatusRequest.success;
+    MyServices myServices = Get.find();
 
     res.fold((l) => showSnackBar(l.message, context), (r) async {
-      getAnyUserData(email, context);
-      state = StatusRequest.success;
+      final res = await _authRepository.getAnyUserData(email);
+      res.fold((l) => showSnackBar(l.message, context), (userModel) async {
+        myServices.sharedPreferences.setString("step", "2");
+        await _ref.read(usersProvider.notifier).update((state) => userModel);
+        await saveUserModelToPrefs(userModel);
+        Get.offAll(HomeMain());
+      });
     });
   }
 
   void verifyPhone(BuildContext context, String phone) async {
     final res = await _authRepository.verifyPhone(phone);
 
-    res.fold((l) => showSnackBar(l.message, context), (r) {
-      Get.to(FinishScreen(
-        phone: phone,
-      ));
-    });
+    res.fold((l) => showSnackBar(l.message, context), (r) {});
   }
 
   void sendCode(String code, BuildContext context, String phone) async {
     state = StatusRequest.loading;
     final res = await _authRepository.sendCode(code);
     state = StatusRequest.success;
-    res.fold((l) => showSnackBar(l.message, context), (r) {});
+    res.fold((l) => showSnackBar(l.message, context), (r) {
+      Get.to(() => FinishScreen(
+            phone: phone,
+          ));
+    });
   }
 
   void logOut() async {
+    MyServices myServices = Get.find();
     _authRepository.logOut();
+    myServices.sharedPreferences.clear();
+    myServices.sharedPreferences.setString("step", "1");
+    Get.offAll(() => LoginScreen());
   }
 
   void updateUserStatus(bool isonline, BuildContext context) async {

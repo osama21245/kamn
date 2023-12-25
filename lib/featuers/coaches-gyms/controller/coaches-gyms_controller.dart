@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kman/core/class/statusrequest.dart';
 import 'package:kman/featuers/auth/controller/auth_controller.dart';
+import 'package:kman/homemain.dart';
 import 'package:kman/models/coache_model.dart';
 import 'package:kman/models/gym_model.dart';
 import 'package:uuid/uuid.dart';
@@ -53,11 +55,41 @@ class CoachesGymsController extends StateNotifier<StatusRequest> {
     res.fold((l) => showSnackBar(l.message, context), (r) => null);
   }
 
+  void openFaceBookLink(String link, BuildContext context) async {
+    final res = await _coachesGymsRepository.openFacebookLink(link);
+    res.fold((l) => showSnackBar(l.message, context), (r) => null);
+  }
+
+  void activeCoach(String coachid, String userId, BuildContext context) async {
+    state = StatusRequest.loading;
+    final res = await _coachesGymsRepository.activeCoach(userId, coachid);
+    state = StatusRequest.success;
+    res.fold((l) => showSnackBar(l.message, context), (r) {
+      Get.to(() => HomeMain());
+    });
+  }
+
+  void activegym(String gymid, String userId, BuildContext context) async {
+    state = StatusRequest.loading;
+    final res = await _coachesGymsRepository.activeGym(userId, gymid);
+    state = StatusRequest.success;
+    res.fold((l) => showSnackBar(l.message, context), (r) {
+      Get.to(() => HomeMain());
+    });
+  }
+
   //**************************futuers only for ground owner*******************************************
 
   void setGyms(
-    BuildContext context,
-  ) async {
+      BuildContext context,
+      File filelogo,
+      String name,
+      String benefitsFirstPlan,
+      String benefitsSecoundPlan,
+      String link,
+      bool ismix,
+      int price) async {
+    state = StatusRequest.loading;
     String id = Uuid().v1();
     final owneruserid = _ref.watch(usersProvider)!.uid;
     String address;
@@ -77,34 +109,36 @@ class CoachesGymsController extends StateNotifier<StatusRequest> {
 
     //get image
 
-    // final res = await _storageRepository.storeFile(
-    //     path: "Gyms", id: id, file: fileLogo);
+    final res = await _storageRepository.storeFile(
+        path: "Gyms", id: id, file: filelogo);
 
-    // res.fold((l) => showSnackBar(l.toString(), context), (r) {
-    //   logo = r;
-    // });
+    res.fold((l) => showSnackBar(l.toString(), context), (r) {
+      logo = r;
+    });
 //set data
     if (logo == "") {
       GymModel gymModel = GymModel(
-          rating: 4.5,
-          benefitsFirstPlan:
-              "1- You will have 30 Sessions Mounthly\n2- 5 Sessions sauna\n3- 5 Sessions jacuzzi\n4- 1 invitation\n1- You will have 50 Sessions Mounthly\n2- 3 Sessions sauna\n3- 3 Sessions jacuzzi\n4- 2 invitation\n1- You will have 30 Sessions Mounthly\n2- 5 Sessions sauna\n3- 5 Sessions jacuzzi\n4- 3 invitation",
-          benefitsSecoundPlan:
-              "1- You will have 30 Sessions Mounthly\n2- 5 Sessions sauna\n3- 5 Sessions jacuzzi\n4- 1 invitation\n1- You will have 50 Sessions Mounthly\n2- 3 Sessions sauna\n3- 3 Sessions jacuzzi\n4- 2 invitation\n1- You will have 30 Sessions Mounthly\n2- 5 Sessions sauna\n3- 5 Sessions jacuzzi\n4- 90 invitation",
+          rating: 0,
+          benefitsFirstPlan: benefitsFirstPlan,
+          benefitsSecoundPlan: benefitsSecoundPlan,
           id: id,
           owneruserId: owneruserid,
-          name: "GOLD'S GYM",
-          link: "https://www.facebook.com/GoldsGymEgypt?mibextid=LQQJ4d",
-          logo: "logo",
+          name: name,
+          link: link,
+          logo: logo,
           address: address,
           long: position.longitude,
           lat: position.latitude,
-          ismix: true,
-          price: 400);
+          ismix: ismix,
+          price: price);
 
       final res = await _coachesGymsRepository.setGym(gymModel);
-      res.fold((l) => showSnackBar(l.toString(), context),
-          (r) => showSnackBar("Your Gym Added Succefuly", context));
+      state = StatusRequest.success;
+
+      res.fold((l) => showSnackBar(l.toString(), context), (r) {
+        showSnackBar("Your reserve Added Succefuly", context);
+        Get.offAll(() => HomeMain());
+      });
     }
   }
 
@@ -117,14 +151,16 @@ class CoachesGymsController extends StateNotifier<StatusRequest> {
       String experience,
       File fileCoacheImage,
       int price,
-      List<String> cvs,
+      List<File> fileCvs,
       String benefits) async {
+    state = StatusRequest.loading;
     String id = Uuid().v1();
     String photo = "";
-    //get image
+
+    List<String> cvs = [];
 
     final res = await _storageRepository.storeFile(
-        path: "Gyms", id: id, file: fileCoacheImage);
+        path: "Coach", id: id, file: fileCoacheImage);
 
     res.fold((l) => showSnackBar(l.toString(), context), (r) {
       photo = r;
@@ -134,7 +170,7 @@ class CoachesGymsController extends StateNotifier<StatusRequest> {
       CoacheModel coacheModel = CoacheModel(
           id: id,
           name: name,
-          raTing: 4.5,
+          raTing: 0,
           userId: "",
           photo: photo,
           education: education,
@@ -145,9 +181,21 @@ class CoachesGymsController extends StateNotifier<StatusRequest> {
           benefits: benefits,
           cvs: cvs);
 
+      for (var img in fileCvs) {
+        String imgId = Uuid().v4();
+
+        final res = await _storageRepository.storeFile(
+            path: "products", id: "$id${imgId}", file: img);
+        res.fold((l) => showSnackBar(l.toString(), context), (r) => cvs.add(r));
+      }
+
       final res = await _coachesGymsRepository.setCoache(coacheModel);
-      res.fold((l) => showSnackBar(l.toString(), context),
-          (r) => showSnackBar("Your reserve Added Succefuly", context));
+      state = StatusRequest.success;
+
+      res.fold((l) => showSnackBar(l.toString(), context), (r) {
+        showSnackBar("Your reserve Added Succefuly", context);
+        Get.offAll(() => HomeMain());
+      });
     }
   }
 }

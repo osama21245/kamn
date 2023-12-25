@@ -7,7 +7,7 @@ import 'package:kman/featuers/auth/widget/finsh/custom_finish_middlesec.dart';
 import 'package:kman/featuers/play/widget/play/custom_play_middlesec.dart';
 import 'package:kman/theme/pallete.dart';
 
-import '../widget/textfield.dart';
+import '../../../core/common/textfield.dart';
 
 class FinishScreen extends ConsumerStatefulWidget {
   String? phone;
@@ -104,12 +104,19 @@ class _FinishScreenState extends ConsumerState<FinishScreen> {
               SizedBox(
                 height: size.height * 0.016,
               ),
-              TextFiledAuth(name: "Password", controller: password!),
+              TextFiled(
+                name: "Password",
+                controller: password!,
+                color: Pallete.lightgreyColor2,
+              ),
               SizedBox(
                 height: size.height * 0.023,
               ),
-              TextFiledAuth(
-                  name: "Confirm Password", controller: confirmPassword!),
+              TextFiled(
+                name: "Confirm Password",
+                controller: confirmPassword!,
+                color: Pallete.lightgreyColor2,
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
                 child: CustomFinishMiddleSec(
@@ -117,11 +124,19 @@ class _FinishScreenState extends ConsumerState<FinishScreen> {
                     collection: "Account information",
                     size: size),
               ),
-              TextFiledAuth(name: "Full Name", controller: fullname!),
+              TextFiled(
+                name: "Full Name",
+                controller: fullname!,
+                color: Pallete.lightgreyColor2,
+              ),
               SizedBox(
                 height: size.height * 0.023,
               ),
-              TextFiledAuth(name: "Age (17,18,..)", controller: age!),
+              TextFiled(
+                name: "Age (17,18,..)",
+                controller: age!,
+                color: Pallete.lightgreyColor2,
+              ),
               SizedBox(
                 height: size.height * 0.023,
               ),

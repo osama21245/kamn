@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:kman/core/providers/valid.dart';
-import 'package:kman/featuers/auth/widget/textfield.dart';
+import 'package:kman/core/common/textfield.dart';
 
 import '../../../theme/pallete.dart';
 import 'verification_screen.dart';
 
 class TakeNumScren extends ConsumerWidget {
-  const TakeNumScren({super.key});
+  TakeNumScren({super.key});
+  TextEditingController phone = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    TextEditingController phone = TextEditingController();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -73,7 +73,8 @@ class TakeNumScren extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(size.width * 0.02),
                       color: Pallete.lightgreyColor,
                     ),
-                    child: TextFiledAuth(
+                    child: TextFiled(
+                        color: Pallete.lightgreyColor2,
                         validator: (val) {
                           validinput(val!, 11, 11, "phone");
                         },
@@ -87,7 +88,9 @@ class TakeNumScren extends ConsumerWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
               child: ElevatedButton(
-                onPressed: () => Get.to(VerficationScreen()),
+                onPressed: () => Get.to(VerficationScreen(
+                  phone: phone.text,
+                )),
                 child: Text(
                   'SEND',
                   style: TextStyle(
@@ -104,15 +107,6 @@ class TakeNumScren extends ConsumerWidget {
                             BorderRadius.circular(size.width * 0.02))),
               ),
             ),
-            Spacer(),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: size.width * 0.34, vertical: size.height * 0.04),
-              child: Image.asset(
-                "assets/page-1/images/step2.png",
-                width: size.width * 0.18,
-              ),
-            )
           ],
         ),
       ),

@@ -2,9 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kman/core/class/crud.dart';
+import 'package:kman/featuers/auth/controller/auth_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-
 import 'core/constants/localization/changelocal.dart';
 import 'core/constants/services/services.dart';
 import 'routes.dart';
@@ -23,6 +24,7 @@ void main() async {
   ]);
   await initialServices();
   runApp(ProviderScope(child: MyApp()));
+  Get.put(Crud());
 }
 
 class MyApp extends ConsumerStatefulWidget {
@@ -33,6 +35,7 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
+  @override
   @override
   Widget build(BuildContext context) {
     LocaleController controller = Get.put(LocaleController());

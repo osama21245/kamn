@@ -1,20 +1,22 @@
 import 'package:get/get.dart';
-import 'package:kman/booking_screen.dart';
-import 'package:kman/featuers/auth/screens/finish_screen.dart';
+import 'package:kman/animated_splash_screen.dart';
+import 'package:kman/core/middleWare/myMiddleWare.dart';
 import 'package:kman/featuers/auth/screens/login_screen.dart';
-import 'package:kman/featuers/auth/screens/takenum_screen.dart';
-import 'package:kman/featuers/coaches-gyms/screens/coaches-gyms_home_screen.dart';
-import 'package:kman/featuers/play/screens/play_home_screen.dart';
+
 import 'package:kman/homemain.dart';
+import 'package:kman/update.dart';
 
 import 'core/constants/routesname.dart';
-import 'core/middleWare/myMiddleWare.dart';
-import 'featuers/auth/screens/verification_screen.dart';
-import 'home.dart';
 
 List<GetPage<dynamic>>? routes = [
+  GetPage(name: "/", page: () => SplashScreen(), middlewares: [myMiddlware()]),
+  GetPage(name: AppRoutes.login, page: () => const LoginScreen()),
+  GetPage(name: AppRoutes.homepage, page: () => const HomeMain()),
+];
+
+List<GetPage<dynamic>>? routesUpdate = [
   GetPage(
     name: "/",
-    page: () => HomeMain(),
+    page: () => UpdateScreen(),
   ), //middlewares: [myMiddlware()]
 ];

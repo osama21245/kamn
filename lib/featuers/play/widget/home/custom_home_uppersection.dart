@@ -1,8 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class CustomHomeUpperSec extends StatelessWidget {
   Size size;
-  CustomHomeUpperSec({Key? key, required this.size}) : super(key: key);
+  Color color;
+  String name;
+  String image;
+  CustomHomeUpperSec({
+    Key? key,
+    required this.size,
+    required this.color,
+    required this.name,
+    required this.image,
+  }) : super(key: key);
+
+  void displayDrawer(BuildContext context) {
+    Scaffold.of(context).openDrawer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,21 +25,24 @@ class CustomHomeUpperSec extends StatelessWidget {
           size.width * 0.01, size.width * 0.02),
       child: Row(
         children: [
-          Container(
-              height: size.height * 0.05,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(size.width * 0.025),
-                  color: Color(0xff272361)),
-              child: Padding(
-                padding: EdgeInsets.all(size.width * 0.004),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(size.width * 0.02),
-                  child: Image.asset(
-                    'assets/page-1/images/profile.png',
-                    fit: BoxFit.cover,
+          InkWell(
+            onTap: () => displayDrawer(context),
+            child: Container(
+                height: size.height * 0.05,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(size.width * 0.025),
+                    color: color),
+                child: Padding(
+                  padding: EdgeInsets.all(size.width * 0.004),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(size.width * 0.02),
+                    child: Image.network(
+                      image,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-              )),
+                )),
+          ),
           SizedBox(
             width: size.width * 0.05,
           ),
@@ -37,10 +54,11 @@ class CustomHomeUpperSec extends StatelessWidget {
                       fontFamily: "Muller",
                       fontSize: size.width * 0.06,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xff272361))),
+                      color: color)),
               Text(
-                "Hazem Emad",
+                name,
                 style: TextStyle(
+                  color: color,
                   fontFamily: "Muller",
                   fontWeight: FontWeight.w500,
                   fontSize: size.width * 0.04,

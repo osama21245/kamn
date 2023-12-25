@@ -6,7 +6,7 @@ import 'package:kman/featuers/auth/screens/takenum_screen.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
 import '../../../theme/pallete.dart';
-import '../widget/textfield.dart';
+import '../../../core/common/textfield.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -53,16 +53,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         padding: EdgeInsets.only(
             left: size.width * 0.1,
             right: size.width * 0.1,
-            top: size.width * 0.13),
+            top: size.width * 0.06),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              "assets/page-1/images/logo-nobackground.png",
-              height: size.height * 0.24,
-            ),
-            SizedBox(
-              height: size.height * 0.02,
+              "assets/page-1/images/kamn_noBG.png",
+              height: size.height * 0.28,
             ),
             Text(
               'Welcome Back , Log in !',
@@ -75,14 +72,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             SizedBox(
               height: size.height * 0.046,
             ),
-            TextFiledAuth(name: "Email or Phone Number", controller: email!),
+            TextFiled(
+              name: "Email or Phone Number",
+              controller: email!,
+              color: Pallete.lightgreyColor2,
+            ),
             SizedBox(
               height: size.height * 0.02,
             ),
-            TextFiledAuth(
+            TextFiled(
               name: "Password",
               controller: password!,
               ispassword: true,
+              color: Pallete.lightgreyColor2,
             ),
             SizedBox(
               height: size.height * 0.01,
@@ -131,7 +133,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       fontWeight: FontWeight.w400),
                 ),
                 InkWell(
-                  onTap: () => Get.to(TakeNumScren()),
+                  onTap: () {},
                   child: Text(
                     "Register Now",
                     style: TextStyle(
@@ -154,9 +156,29 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   fontSize: size.width * 0.03,
                   fontWeight: FontWeight.w500),
             ),
-            SignInButton(
-              Buttons.facebook,
-              onPressed: () {},
+            ElevatedButton(
+              onPressed: () => Get.to(TakeNumScren()),
+              child: Row(
+                children: [
+                  Image.asset(
+                    "assets/page-1/images/kamn_splash.png",
+                    fit: BoxFit.contain,
+                  ),
+                  Text(
+                    'Register Now',
+                    style: TextStyle(
+                        color: Pallete.whiteColor,
+                        fontFamily: "Muller",
+                        fontSize: size.width * 0.05,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+              style: ElevatedButton.styleFrom(
+                  fixedSize: Size(size.width * 0.6, size.height * 0.04),
+                  backgroundColor: Pallete.primaryColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(size.width * 0.02))),
             ),
             SignInButton(
               Buttons.google,

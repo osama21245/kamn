@@ -11,7 +11,7 @@ class GroundModel {
   final int rating;
   final String groundnumber;
   final int groundPlayersNum;
-  final String ownerNum;
+
   final String futuers;
   final double long;
   final double lat;
@@ -25,7 +25,6 @@ class GroundModel {
     required this.rating,
     required this.groundnumber,
     required this.groundPlayersNum,
-    required this.ownerNum,
     required this.futuers,
     required this.long,
     required this.lat,
@@ -41,7 +40,6 @@ class GroundModel {
     int? rating,
     String? groundnumber,
     int? groundPlayersNum,
-    String? ownerNum,
     String? futuers,
     double? long,
     double? lat,
@@ -56,7 +54,6 @@ class GroundModel {
       rating: rating ?? this.rating,
       groundnumber: groundnumber ?? this.groundnumber,
       groundPlayersNum: groundPlayersNum ?? this.groundPlayersNum,
-      ownerNum: ownerNum ?? this.ownerNum,
       futuers: futuers ?? this.futuers,
       long: long ?? this.long,
       lat: lat ?? this.lat,
@@ -74,7 +71,6 @@ class GroundModel {
       'rating': rating,
       'groundnumber': groundnumber,
       'groundPlayersNum': groundPlayersNum,
-      'ownerNum': ownerNum,
       'futuers': futuers,
       'long': long,
       'lat': lat,
@@ -92,7 +88,6 @@ class GroundModel {
       rating: map['rating'] as int,
       groundnumber: map['groundnumber'] as String,
       groundPlayersNum: map['groundPlayersNum'] as int,
-      ownerNum: map['ownerNum'] as String,
       futuers: map['futuers'] as String,
       long: map['long'] as double,
       lat: map['lat'] as double,
@@ -106,7 +101,7 @@ class GroundModel {
 
   @override
   String toString() {
-    return 'GroundModel(id: $id, name: $name, address: $address, groundImage: $groundImage, groundOwnerId: $groundOwnerId, price: $price, rating: $rating, groundnumber: $groundnumber, groundPlayersNum: $groundPlayersNum, ownerNum: $ownerNum, futuers: $futuers, long: $long, lat: $lat)';
+    return 'GroundModel(id: $id, name: $name, address: $address, groundImage: $groundImage, groundOwnerId: $groundOwnerId, price: $price, rating: $rating, groundnumber: $groundnumber, groundPlayersNum: $groundPlayersNum, futuers: $futuers, long: $long, lat: $lat)';
   }
 
   @override
@@ -122,7 +117,6 @@ class GroundModel {
         other.rating == rating &&
         other.groundnumber == groundnumber &&
         other.groundPlayersNum == groundPlayersNum &&
-        other.ownerNum == ownerNum &&
         other.futuers == futuers &&
         other.long == long &&
         other.lat == lat;
@@ -139,7 +133,6 @@ class GroundModel {
         rating.hashCode ^
         groundnumber.hashCode ^
         groundPlayersNum.hashCode ^
-        ownerNum.hashCode ^
         futuers.hashCode ^
         long.hashCode ^
         lat.hashCode;

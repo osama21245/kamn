@@ -11,6 +11,7 @@ import '../../../core/constants/constants.dart';
 import '../../../core/faliure.dart';
 import '../../../core/type_def.dart';
 import '../../../models/coache_model.dart';
+import '../../../models/reserved_model.dart';
 import '../../../models/user_model.dart';
 
 final AuthRepositoryProvider = Provider((ref) => AuthRepository(
@@ -32,6 +33,8 @@ class AuthRepository {
 
   CollectionReference get _users =>
       _firestore.collection(FirebaseConstants.usersCollection);
+  CollectionReference get _appstate =>
+      _firestore.collection(FirebaseConstants.appStateCollection);
   String verifyid = "";
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
@@ -82,6 +85,17 @@ class AuthRepository {
     } catch (e) {
       return left(Failure(e.toString()));
     }
+  }
+
+  Stream<List<ReserveModel>> getUserResevisions(String uid) {
+    return _users.doc(uid).collection("reserve").snapshots().map((value) {
+      List<ReserveModel> reservisions = [];
+      for (var document in value.docs) {
+        reservisions
+            .add(ReserveModel.fromMap(document.data() as Map<String, dynamic>));
+      }
+      return reservisions;
+    });
   }
 
   FutureEither<UserModel> signInAsGuest() async {
@@ -142,8 +156,9 @@ class AuthRepository {
   Future<Either<Failure, UserModel>> getAnyUserData(String email) async {
     try {
       UserModel? userdata;
-      _users.doc(email).get().then((value) {
+      await _users.doc(email).get().then((value) {
         userdata = UserModel.fromMap(value.data() as Map<String, dynamic>);
+
         return userdata;
       });
       return right(userdata!);
@@ -152,6 +167,19 @@ class AuthRepository {
     } catch (e) {
       return left(Failure(e.toString()));
     }
+  }
+
+  getAppStatus() {
+    try {
+      bool? inUpdate;
+      _appstate.doc("state").snapshots().map((value) {
+        Map<String, dynamic> data = value.data() as Map<String, dynamic>;
+        inUpdate = data["inUpdate"];
+        return inUpdate;
+      });
+    } on FirebaseException catch (e) {
+      throw e.toString();
+    } catch (e) {}
   }
 
   FutureVoid verifyPhone(String phone) async {
@@ -170,6 +198,16 @@ class AuthRepository {
       ));
     } on FirebaseException catch (e) {
       throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureVoid editUser(UserModel userModel) async {
+    try {
+      return right(_users.doc(userModel.uid).update(userModel.toMap()));
+    } on FirebaseException catch (e) {
+      throw e;
     } catch (e) {
       return left(Failure(e.toString()));
     }
@@ -204,8 +242,13 @@ class AuthRepository {
           "================================$verifyid==============================");
       PhoneAuthCredential credential =
           PhoneAuthProvider.credential(verificationId: verifyid, smsCode: code);
+      await _auth.signInWithCredential(credential);
 
-      return right(credential);
+      if (_auth.currentUser != null) {
+        return right(credential);
+      } else {
+        return left(Failure("Erorr with code"));
+      }
     } on FirebaseException catch (e) {
       throw e;
     } catch (e) {
@@ -215,6 +258,11 @@ class AuthRepository {
 
   Stream<UserModel> getUserData(String uid) {
     return _users.doc(uid).snapshots().map(
+        (event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
+  }
+
+  Future<UserModel> getUserDataFuture(String uid) {
+    return _users.doc(uid).get().then(
         (event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
   }
 

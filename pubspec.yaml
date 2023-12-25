@@ -67,6 +67,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_otp_text_field: ^1.1.1
   sign_in_button: ^3.0.0
+  flutter_custom_tabs: ^1.2.1
+  webview_flutter: ^4.4.2
   
   
  
@@ -82,13 +84,13 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/page-1/images/logo.png"
+  image_path: "assets/page-1/images/kamn_new.jpg"
   min_sdk_android: 21
 
 flutter_native_splash:
   color: "#FFFFFF"
   android: true
-  image: assets/page-1/images/ALMOSTAML-removebg-preview.png
+  image: assets/page-1/images/kamn_splash.png
   flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the

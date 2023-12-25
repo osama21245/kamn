@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kman/HandlingDataView.dart';
 import 'package:kman/core/class/statusrequest.dart';
+import 'package:kman/featuers/auth/controller/auth_controller.dart';
 import 'package:lottie/lottie.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:kman/core/class/reservisionParameters.dart';
@@ -45,32 +46,30 @@ class _ReservisionScreenState extends ConsumerState<ReservisionScreen> {
     super.initState();
   }
 
-  void reservision(
-    WidgetRef ref,
-    BuildContext context,
-    ReserveModel reserveModel,
-  ) {
-    ref
-        .watch(playControllerProvider.notifier)
-        .reserve(widget.groundId!, context, widget.collection!, reserveModel);
+  void reservision(WidgetRef ref, BuildContext context,
+      ReserveModel reserveModel, int points) {
+    ref.watch(playControllerProvider.notifier).reserve(
+        widget.groundId!, context, widget.collection!, reserveModel, points);
   }
 
-  void joinGame(WidgetRef ref, BuildContext context, String reserveId) {
-    ref
-        .watch(playControllerProvider.notifier)
-        .joinGame(widget.collection!, widget.groundId!, reserveId, context);
+  void joinGame(
+      WidgetRef ref, BuildContext context, String reserveId, int points) {
+    ref.watch(playControllerProvider.notifier).joinGame(
+        widget.collection!, widget.groundId!, reserveId, context, points);
   }
 
-  void leaveGame(WidgetRef ref, BuildContext context, String reserveId) {
-    ref
-        .watch(playControllerProvider.notifier)
-        .leaveGame(widget.collection!, widget.groundId!, reserveId, context);
+  void leaveGame(
+      WidgetRef ref, BuildContext context, String reserveId, int points) {
+    ref.watch(playControllerProvider.notifier).leaveGame(
+        widget.collection!, widget.groundId!, reserveId, context, points);
   }
 
   @override
   Widget build(BuildContext context) {
     StatusRequest statusRequest = ref.watch(playControllerProvider);
-    final String userId = "osama";
+    final userId = ref.watch(usersProvider)!.uid;
+    final user = ref.watch(usersProvider);
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
@@ -128,15 +127,20 @@ class _ReservisionScreenState extends ConsumerState<ReservisionScreen> {
                               if (reserveModel!.collaborations
                                       .contains(userId) &&
                                   !reserveModel!.iscomplete) {
-                                leaveGame(ref, context, reserveModel!.id);
+                                leaveGame(ref, context, reserveModel!.id,
+                                    user!.points - 10);
                                 reserveModel!.collaborations.remove(userId);
                               } else if (!reserveModel!.collaborations
                                       .contains(userId) &&
                                   !reserveModel!.iscomplete) {
                                 reserveModel!.collaborations.add(userId);
-                                joinGame(ref, context, reserveModel!.id);
+                                joinGame(ref, context, reserveModel!.id,
+                                    user!.points + 10);
                               } else {
-                                reservision(ref, context, reserveModel!);
+                                reserveModel!.userId = userId;
+                                reserveModel!.isresrved = true;
+                                reservision(ref, context, reserveModel!,
+                                    user!.points + 20);
                               }
                             }
                           });

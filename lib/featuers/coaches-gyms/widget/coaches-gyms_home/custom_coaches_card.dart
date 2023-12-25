@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kman/featuers/play/widget/play/showrating.dart';
@@ -19,7 +20,7 @@ class CustomCoachesCard extends ConsumerWidget {
       child: Stack(
         children: [
           Container(
-            height: size.height * 0.25,
+            height: size.height * 0.24,
             child: Column(
               children: [
                 Container(
@@ -101,8 +102,8 @@ class CustomCoachesCard extends ConsumerWidget {
                       child: CircleAvatar(
                           backgroundColor: Pallete.primaryColor,
                           radius: size.width * 0.1,
-                          backgroundImage: AssetImage(
-                              "assets/page-1/images/coaches-gyms.png")),
+                          backgroundImage:
+                              CachedNetworkImageProvider(coacheModel.photo)),
                     ),
                   )),
               SizedBox(
