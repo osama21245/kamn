@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kamn/core/const/constants.dart';
 import 'package:kamn/core/helpers/spacer.dart';
+import 'package:kamn/core/theme/app_pallete.dart';
+import 'package:kamn/core/theme/style.dart';
 import 'package:kamn/features/sports/presentation/widgets/custom_profile_top_bar.dart';
 import 'package:kamn/features/sports/presentation/widgets/custome_user_data.dart';
 import 'package:kamn/features/sports/presentation/widgets/custome_user_options.dart';
@@ -11,12 +14,12 @@ class MyProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppPallete.whiteColor,
       body: Column(
         children: [
           Container(
             decoration: BoxDecoration(
-                color: const Color(0xffA117F1),
+                color: AppPallete.vividVioletColor,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(24.r),
                     bottomRight: Radius.circular(24.r))),
@@ -53,9 +56,9 @@ class MyProfileScreen extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'Logout',
-                  style: TextStyle(
-                      fontSize: 16.h, color: Colors.white), // Adjust font size
+                  Constants.logout,
+                  style:
+                      TextStyles.font2OfWhiteMediumRoboto, // Adjust font size
                 ),
               ),
             ),

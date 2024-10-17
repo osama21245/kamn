@@ -65,4 +65,29 @@ class TextStyles {
       color: AppPallete.greenColor,
       fontWeight: FontWeightHelper.semiBold,
       fontSize: 16.h);
+  static TextStyle font14White70 = TextStyle(
+      fontFamily: "Roboto",
+      color: AppPallete.whiteColor,
+      fontWeight: FontWeightHelper.regular,
+      fontSize: 13.14.h);
+  static TextStyle font18White = TextStyle(
+      fontFamily: "Inter",
+      color: AppPallete.whiteColor,
+      fontWeight: FontWeightHelper.semiBold,
+      fontSize: 18.77.h);
+  static TextStyle font20White = TextStyle(
+      fontFamily: "Inter",
+      color: AppPallete.whiteColor,
+      fontWeight: FontWeightHelper.semiBold,
+      fontSize: 20.h);
+  static TextStyle font15blackMediumInter = TextStyle(
+      fontFamily: "Inter",
+      color: AppPallete.blackColor,
+      fontWeight: FontWeightHelper.medium,
+      fontSize: 15.15.h);
+  static TextStyle font2OfWhiteMediumRoboto = TextStyle(
+      fontFamily: "Roboto",
+      color: AppPallete.ofWhiteColor,
+      fontWeight: FontWeightHelper.medium,
+      fontSize: 20.h);
 }

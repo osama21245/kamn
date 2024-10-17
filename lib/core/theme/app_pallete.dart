@@ -47,4 +47,6 @@ class AppPallete {
   static const Color ofWhiteColor = Color(0xffF6F6F6);
   static const Color lgGreyColor = Color(0xffD9D9D9);
   static const Color yellowColor = Color(0xffFFC73C);
+  static const Color vividVioletColor = Color(0xffA117F1);
+  static const Color orangeAccentColor = Colors.orangeAccent;
 }

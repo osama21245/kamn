@@ -15,16 +15,16 @@ class CustomeUserOptions extends StatelessWidget {
           padding: EdgeInsets.only(top: 20),
           child: CustomeMenuItem(icon: Icons.flight, title: "My Reservations"),
         ),
-        Divider(endIndent: 25.w, indent: 25.w), // Responsive indent
+        divider(25, 25), // Responsive indent
         const CustomeMenuItem(
             icon: Icons.local_grocery_store_outlined, title: "My Store"),
-        Divider(endIndent: 25.w, indent: 25.w), // Responsive indent
+        divider(25, 25), // Responsive indent
         verticalSpace(70),
         const CustomeMenuItem(
             icon: Icons.group_add_outlined, title: "Invite Friends"),
-        Divider(endIndent: 25.w, indent: 25.w),
+        divider(25, 25),
         const CustomeMenuItem(icon: Icons.question_mark, title: "My Order"),
-        Divider(endIndent: 25.w, indent: 25.w),
+        divider(25, 25),
         const CustomeMenuItem(icon: Icons.settings, title: "Settings"),
       ],
     );

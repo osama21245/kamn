@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kamn/core/const/constants.dart';
+import 'package:kamn/core/theme/app_pallete.dart';
+import 'package:kamn/core/theme/style.dart';
 
 class CustomProfileTopBar extends StatelessWidget {
   const CustomProfileTopBar({super.key});
@@ -12,27 +15,25 @@ class CustomProfileTopBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            color: Colors.white,
+            color: AppPallete.whiteColor,
             icon: Icon(Icons.arrow_back, size: 32.h),
             // Adjust size using ScreenUtil
             onPressed: () {
               // Action for back button
             },
           ),
-          Text(
-            'My Profile',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 24.h,
-                fontWeight: FontWeight.w700), // Adjust font size
-          ),
+          Text(Constants.myProfile,
+              style: TextStyles.font20White // Adjust font size
+              ),
           CircleAvatar(
             backgroundColor: const Color(0xffF6F6F6).withOpacity(.4),
             child: IconButton(
-              padding: EdgeInsets.zero, // Remove padding
-              iconSize: 32.h, // Set the icon size here
+              padding: EdgeInsets.zero,
+              // Remove padding
+              iconSize: 32.h,
+              // Set the icon size here
               icon: const Icon(Icons.notifications_outlined),
-              color: Colors.white,
+              color: AppPallete.whiteColor,
               onPressed: () {
                 // Notification action
               },

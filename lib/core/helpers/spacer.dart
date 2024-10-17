@@ -9,3 +9,6 @@ SizedBox verticalSpace(double height) => SizedBox(
 SizedBox horizontalSpace(double width) => SizedBox(
       width: width.w,
     );
+
+Divider divider(double endIndent, double indent) =>
+    Divider(endIndent: endIndent.w, indent: indent.w);

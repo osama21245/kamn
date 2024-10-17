@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kamn/core/const/constants.dart';
+import 'package:kamn/core/const/image_links.dart';
+import 'package:kamn/core/helpers/spacer.dart';
+import 'package:kamn/core/theme/app_pallete.dart';
+import 'package:kamn/core/theme/style.dart';
 
 class CustomUserData extends StatelessWidget {
   const CustomUserData({super.key});
@@ -12,46 +17,28 @@ class CustomUserData extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 35.r, // Responsive radius
-            backgroundColor: Colors.orangeAccent,
+            backgroundColor: AppPallete.orangeAccentColor,
             backgroundImage: const AssetImage(
-                'assets/images/profile_picture.png'), // Responsive icon size
+                ImageLinks.profile_picture), // Responsive icon size
           ),
           SizedBox(width: 16.w), // Responsive width
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Mahmoud Sayed',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.h, // Responsive font size
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 4.h), // Responsive height
-              Text(
-                'josphamdes@gmail.com',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 14.h, // Responsive font size
-                ),
-              ),
-              SizedBox(height: 4.h),
-              Text(
-                '+1 654 785 4462',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 14.h,
-                ),
-              ),
+              Text(Constants.userName, style: TextStyles.font18White),
+
+              verticalSpace(4), // Responsive height
+              Text(Constants.userEmail, style: TextStyles.font14White70),
+              verticalSpace(4),
+              Text(Constants.phoneNumber, style: TextStyles.font14White70),
             ],
           ),
           const Spacer(),
           IconButton(
             icon: ImageIcon(
-              const AssetImage("assets/images/NotePencil.png"),
+              const AssetImage(ImageLinks.NotePencilIcon),
               size: 32.h,
-              color: Colors.white,
+              color: AppPallete.whiteColor,
             ),
 
             //Icon(Icons.edit_calendar_rounded, color: Colors.white, size: 24.sp), // Responsive icon size
