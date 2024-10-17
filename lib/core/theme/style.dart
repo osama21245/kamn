@@ -65,4 +65,34 @@ class TextStyles {
       color: AppPallete.greenColor,
       fontWeight: FontWeightHelper.semiBold,
       fontSize: 16.h);
+  static TextStyle fontInter14GreyRegular = TextStyle(
+      fontFamily: "Inter",
+      color: AppPallete.greyColor,
+      fontWeight: FontWeightHelper.regular,
+      fontSize: 14.h);
+  static TextStyle fontInter32BlackMedium = TextStyle(
+      fontFamily: "Inter",
+      color: AppPallete.blackColor,
+      fontWeight: FontWeightHelper.medium,
+      fontSize: 32.h);
+  static TextStyle fontInter10GreyLight = TextStyle(
+      fontFamily: "Inter",
+      color: AppPallete.greyColor,
+      fontWeight: FontWeightHelper.light,
+      fontSize: 10.h);
+  static TextStyle fontInter14BlackMedium = TextStyle(
+      fontFamily: "Inter",
+      color: AppPallete.blackColor,
+      fontWeight: FontWeightHelper.medium,
+      fontSize: 14.h);
+  static TextStyle fontInter11GreyMedium = TextStyle(
+      fontFamily: "Inter",
+      color: const Color(0xffBBBBBB),
+      fontWeight: FontWeightHelper.medium,
+      fontSize: 11.h);
+  static TextStyle fontInter16WhiteMedium = TextStyle(
+      fontFamily: "Inter",
+      color: Colors.white,
+      fontWeight: FontWeightHelper.medium,
+      fontSize: 16.h);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kamn/features/sports/presentation/screens/ground_details_screen.dart';
+import 'package:kamn/features/sports_service_providers/presentation/screens/add_service.dart';
 
 import 'init_dependencies.dart';
 
@@ -27,8 +28,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-
-        home: GroundDetailsScreen(),
+        home: AddServiceScreen(),
       ),
     );
   }

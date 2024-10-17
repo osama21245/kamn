@@ -73,6 +73,7 @@ dependencies:
   flutter_image_slideshow: ^0.1.6
   #An SVG rendering and widget library for Flutter
   flutter_svg: ^2.0.10+1
+  dotted_border: ^2.1.0
 
 
 
