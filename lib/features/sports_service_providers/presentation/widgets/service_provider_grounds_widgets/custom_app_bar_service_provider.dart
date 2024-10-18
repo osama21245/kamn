@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:badges/badges.dart' as badges;
-import '../../../../core/commen/widgets/sized_box_style.dart';
-import '../../../../core/theme_data/app_palette.dart';
-import '../../../../core/utils/app_images.dart';
+import '../../../../../core/helpers/spacer.dart';
+import '../../../../../core/theme/app_pallete.dart';
+import '../../../../../core/utils/app_images.dart';
 
-class CustomAppBar {
+class CustomAppBarServiceProvider {
  static AppBar appBar({
    required Function()? arrowFunction,
    required Function()? notificationIconFunction,
@@ -14,20 +14,22 @@ class CustomAppBar {
 }){
     return AppBar(
       leadingWidth: 45.w,
+      elevation: 0,
+      backgroundColor: AppPallete.whiteColor,
       leading:Row(
         children: [
-          SizedBoxStyle.horizontal(18.w),
+          horizontalSpace(18.w),
           InkWell(
             onTap:arrowFunction,
             child: Container(
               decoration: const BoxDecoration(
-                color: AppPalette.darkGreenColor,
+                color: AppPallete.accentBlackColor,
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.arrow_back_rounded,
-                size: 20.sp,
-                color: AppPalette.lightGrayColor,
+                size: 20.h,
+                color: AppPallete.lightGrayColor,
               ),
             ),
           ),
@@ -43,11 +45,11 @@ class CustomAppBar {
             onPressed: badgesIconFunction,
             icon: Icon(
               Icons.notifications_none_outlined,
-              size: 32.sp,
+              size: 32.h,
             ),
           ),
         ),
-        SizedBoxStyle.horizontal(10.w),
+        horizontalSpace(10),
         InkWell(
           onTap: profileFunction,
           child: const CircleAvatar(
@@ -55,7 +57,7 @@ class CustomAppBar {
             radius: 16.0,
           ),
         ),
-        SizedBoxStyle.horizontal(18.w),
+        horizontalSpace(18),
       ],
     );
   }

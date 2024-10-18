@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../core/theme/app_pallete.dart';
+import '../../../../../core/theme/style.dart';
 
-import '../../../../core/theme_data/app_palette.dart';
-import '../../../../core/theme_data/style.dart';
-
-class CustomFilterItem extends StatelessWidget {
+class CustomFilterItemServiceProvider extends StatelessWidget {
   final IconData? icon;
   final String text;
   final void Function()? onPressed;
-  const CustomFilterItem({
+  const CustomFilterItemServiceProvider({
   super.key,
   required this.icon,
   required this.text,
@@ -21,31 +20,28 @@ class CustomFilterItem extends StatelessWidget {
       alignment: Alignment.center,
       padding:EdgeInsets.symmetric(horizontal: 10.w),
       decoration: BoxDecoration(
-        color:AppPalette.lightGreenColor,
+        color:AppPallete.lightGrayColor,
         borderRadius: BorderRadius.circular(15.r),
-        border: Border.all(
-          color: AppPalette.greenColor,
-          width: 1.w,
-        ),
+      
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.haceBetween,
         children: [
           Icon(
             icon,
-            size: 12.sp,
-            color: AppPalette.darkGreenColor,
+            size: 12.h,
+            color: AppPallete.accentBlackColor,
           ),
           Text(
             text,
-            style: Style.font10BlackColorW400,
+            style: TextStyles.font10BlackColorW400,
           ),
           IconButton(
             onPressed:onPressed,
             icon: Icon(
               Icons.cancel_outlined,
-              color: AppPalette.grayColor,
-              size: 12.sp,
+              color: AppPallete.grayColor,
+              size: 12.h,
             ),
           ),
         ],

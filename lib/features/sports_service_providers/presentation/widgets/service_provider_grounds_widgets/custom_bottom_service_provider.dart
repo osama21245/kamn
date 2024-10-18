@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kamn/core/theme_data/app_palette.dart';
+import '../../../../../core/theme/app_pallete.dart';
 
-class CustomBottom extends StatelessWidget {
+class CustomBottomServiceProvider extends StatelessWidget {
   final Function() onPressed;
   final String textBottom;
   final TextStyle textStyle;
   final bool iconVisible;
   final Widget iconWidget;
   final Color? backgroundColor;
-  const CustomBottom({
+  const CustomBottomServiceProvider({
     super.key,
     required this.onPressed,
     required this.textBottom,
@@ -23,7 +23,7 @@ class CustomBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor:backgroundColor ?? AppPalette.darkGreenColor,
+        backgroundColor:backgroundColor ?? AppPallete.accentBlackColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50.r),
         ),
@@ -31,6 +31,7 @@ class CustomBottom extends StatelessWidget {
       ),
       onPressed: onPressed,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Visibility(
               visible: iconVisible,

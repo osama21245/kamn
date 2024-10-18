@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kamn/core/constant/constant_string.dart';
-
-import '../../../../core/theme_data/app_palette.dart';
+import '../../../../../core/const/constants.dart';
+import '../../../../../core/theme/app_pallete.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  TextEditingController controller;
-   void Function(String)? onChange;
-  CustomTextFormField({super.key,
+ final TextEditingController controller;
+ final  void Function(String)? onChange;
+ const CustomTextFormField({super.key,
     required this.controller,
     this.onChange,
   });
@@ -15,28 +14,28 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      cursorColor:AppPalette.darkGreenColor ,
+      cursorColor:AppPallete.darkGreenColor ,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 10.h,horizontal: 10.w),
         filled: true,
-        fillColor: AppPalette.lightGrayColor,
-        hintText: ConstantString.hintTextForSearch,
-        hintStyle: const TextStyle(color: AppPalette.grayColor),
-        prefixIcon: const Icon(Icons.search,color: AppPalette.grayColor,),
+        fillColor: AppPallete.lightGrayColor,
+        hintText: Constants.hintTextForSearch,
+        hintStyle: const TextStyle(color: AppPallete.grayColor),
+        prefixIcon: const Icon(Icons.search,color: AppPallete.grayColor,),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50),
           borderSide:
-          const BorderSide(color: AppPalette.lightGrayColor),
+          const BorderSide(color: AppPallete.lightGrayColor),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50),
           borderSide:
-          const BorderSide(color: AppPalette.lightGrayColor),
+          const BorderSide(color: AppPallete.lightGrayColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(50),
           borderSide:
-          const BorderSide(color: AppPalette.darkGreenColor),
+          const BorderSide(color: AppPallete.darkGreenColor),
         ),
       ),
       onChanged: onChange,

@@ -1,24 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../core/helpers/spacer.dart';
+import '../../../../../core/theme/app_pallete.dart';
+import '../../../../../core/theme/style.dart';
+import '../../../../../core/utils/app_images.dart';
 
-import '../../../../core/commen/widgets/sized_box_style.dart';
-import '../../../../core/theme_data/app_palette.dart';
-import '../../../../core/theme_data/style.dart';
-import '../../../../core/utils/app_images.dart';
+class CustomGroundItemServiceProvider extends StatelessWidget {
+ final String imageUrl;
+ final String placeText;
+ final String location;
+ final String rates;
+ final String km;
+ final String available;
+ final String owner;
+ final String price;
+ final void Function()? favoriteOnTap;
 
-class CustomGroundItem extends StatelessWidget {
-  String imageUrl;
-  String placeText;
-  String location;
-  String rates;
-  String km;
-  String available;
-  String owner;
-  String price;
-  void Function()? favoriteOnTap;
-
-  CustomGroundItem({
+ const CustomGroundItemServiceProvider({
     super.key,
     required this.imageUrl,
     required this.favoriteOnTap,
@@ -36,10 +35,10 @@ class CustomGroundItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
       decoration: BoxDecoration(
-        color: AppPalette.backgroundColor,
+        color: AppPallete.whiteColor,
         borderRadius: BorderRadius.circular(15.r),
         border: Border.all(
-          color: AppPalette.greenColor,
+          color: AppPallete.greenColor,
           width: 1.w,
         ),
       ),
@@ -71,13 +70,13 @@ class CustomGroundItem extends StatelessWidget {
                   padding: EdgeInsets.all(2.h.w),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppPalette.backgroundColor,
+                    color: AppPallete.whiteColor,
                   ),
                   child:  Center(
                     child: Icon(
                       Icons.favorite_outline,
-                      color: AppPalette.darkGrayColor,
-                      size: 20.sp,
+                      color: AppPallete.darkGrayColor,
+                      size: 20.h,
                     ),
                   ),
                 ),
@@ -89,12 +88,12 @@ class CustomGroundItem extends StatelessWidget {
           children: [
             Text(
               placeText,
-              style: Style.font16DartBlackColorW400,
+              style: TextStyles.font16DartBlackColorW400,
             ),
-            SizedBoxStyle.horizontal(8.w),
+            horizontalSpace(8),
             Text(
               "$km km",
-              style: Style.font10DarkGreenColorW400,
+              style: TextStyles.font10DarkGreenColorW400,
             ),
           ],
         ),
@@ -102,37 +101,37 @@ class CustomGroundItem extends StatelessWidget {
           children: [
             Text(
               "Owner: ",
-              style: Style.font10BlackColorW400,
+              style: TextStyles.font10BlackColorW400,
             ),
             Text(
               owner,
-              style: Style.font10DarkGreenColorW400,
+              style: TextStyles.font10DarkGreenColorW400,
             ),
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.haceBetween,
           children: [
             Row(
               children: [
                 Icon(
                   Icons.location_on_outlined,
-                  size: 12.sp,
-                  color: AppPalette.grayColor,
+                  size: 12.h,
+                  color: AppPallete.grayColor,
                 ),
-                SizedBoxStyle.horizontal(4.w),
+                horizontalSpace(4),
                 Text(
                   location,
-                  style: Style.font10GrayColorW400,
+                  style: TextStyles.font10GrayColorW400,
                 ),
-                SizedBoxStyle.horizontal(8.w),
+                horizontalSpace(8),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 2.w,vertical: 2.h),
                   decoration: BoxDecoration(
-                    color: AppPalette.backgroundColor,
+                    color: AppPallete.whiteColor,
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: AppPalette.greenColor,
+                      color: AppPallete.greenColor,
                       width: 1.w,
                     ),
                   ),
@@ -140,38 +139,38 @@ class CustomGroundItem extends StatelessWidget {
                     height: 4.h,
                     width: 4.w,
                     decoration: const BoxDecoration(
-                        color: AppPalette.greenColor,
+                        color: AppPallete.greenColor,
                         shape: BoxShape.circle
                     ),
                   ),
                 ),
-                SizedBoxStyle.horizontal(4.w),
+                horizontalSpace(4),
                 Text(
                  available ,
-                  style: Style.font7DartBlackColorW400,
+                  style: TextStyles.font7DartBlackColorW400,
                 ),
-                SizedBoxStyle.horizontal(8.w),
+                horizontalSpace(8),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                   decoration: BoxDecoration(
-                    color: AppPalette.backgroundColor,
+                    color: AppPallete.whiteColor,
                     borderRadius: BorderRadius.circular(15.r),
                     border: Border.all(
-                      color: AppPalette.greenColor,
+                      color: AppPallete.greenColor,
                       width: 1.w,
                     ),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.haceBetween,
                     children: [
                       Text(
                         rates,
-                        style: Style.font10GrayColorW400,
+                        style: TextStyles.font10GrayColorW400,
                       ),
                       Icon(
                         Icons.star,
-                        size: 12.sp,
-                        color: AppPalette.yellowColor,
+                        size: 12.h,
+                        color: AppPallete.yellowColor,
                       ),
                     ],
                   ),
@@ -183,11 +182,11 @@ class CustomGroundItem extends StatelessWidget {
               children: [
                 Text(
                   "$price LE",
-                  style: Style.font16DartBlackColorW400,
+                  style: TextStyles.font16DartBlackColorW400,
                 ),
                 Text(
                   "/hr",
-                  style: Style.font10BlackColorW400,
+                  style: TextStyles.font10BlackColorW400,
                 ),
               ],
             ),
@@ -197,4 +196,5 @@ class CustomGroundItem extends StatelessWidget {
       ]),
     );
   }
+  
 }
