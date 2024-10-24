@@ -5,6 +5,8 @@ import 'package:kamn/core/const/constants.dart';
 import 'package:kamn/core/helpers/spacer.dart';
 import 'package:kamn/core/theme/app_pallete.dart';
 import 'package:kamn/core/theme/style.dart';
+import 'package:kamn/core/utils/image_picker.dart';
+import 'package:kamn/features/sports_service_providers/data/model/playground_model.dart';
 
 import 'package:kamn/features/sports_service_providers/presentation/cubit/service_provider/service_provider_cubit.dart';
 
@@ -19,7 +21,14 @@ class CustomeFinishedButton extends StatelessWidget {
           style:
               ElevatedButton.styleFrom(backgroundColor: AppPallete.blackColor),
           onPressed: () {
-            context.read<ServiceProviderCubit>().addService();
+            if (context
+                    .read<ServiceProviderCubit>()
+                    .formKey
+                    .currentState
+                    ?.validate() ==
+                true) {
+              context.read<ServiceProviderCubit>().compressImage();
+            }
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

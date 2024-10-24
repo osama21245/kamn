@@ -5,7 +5,7 @@ import 'package:kamn/core/theme/style.dart';
 
 typedef MyValidator = String? Function(String?);
 
-class CustomeTextFormField extends StatefulWidget {
+class CustomeTextFormField extends StatelessWidget {
   String hint;
   Widget? suffixIcon;
   Widget? prefixIcon;
@@ -26,25 +26,33 @@ class CustomeTextFormField extends StatefulWidget {
       required this.controller});
 
   @override
-  State<CustomeTextFormField> createState() => _TextFormFieldWidgetState();
-}
-
-class _TextFormFieldWidgetState extends State<CustomeTextFormField> {
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget.controller,
-      obscureText: widget.obscureText ?? false,
-      validator: widget.validator,
+      controller: controller,
+      obscureText: obscureText ?? false,
+      validator: validator,
       style: TextStyles.fontInter14BlackMedium,
       decoration: InputDecoration(
+        errorMaxLines: 2,
         contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
-        suffixIcon: widget.suffixIcon,
-        hintText: widget.hint,
+        suffixIcon: suffixIcon,
+        hintText: hint,
         hintStyle: TextStyles.font12GreyRegular,
         filled: true,
         fillColor: AppPallete.lightColor,
-        prefixIcon: widget.prefixIcon,
+        prefixIcon: prefixIcon,
+        errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppPallete.redColor.withOpacity(.5),
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(20)),
+        focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppPallete.redColor,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(20)),
         enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
               color: AppPallete.lgGreyColor,

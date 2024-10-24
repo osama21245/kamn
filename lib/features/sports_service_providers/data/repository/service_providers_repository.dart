@@ -17,32 +17,20 @@ abstract class ServiceProvidersRepository {
 class ServiceProvidersRepositoryImpl implements ServiceProvidersRepository {
   ServiceProvidersRemoteDataSource dataSource;
   ServiceProvidersRepositoryImpl({required this.dataSource});
-  //TODO:Check connectivity  in executeTryAndCatchForRepository
+  //TODO:Check connectivity  in executeTryAndCatchForRepository /* done
   @override
   Future<Either<Faliure, void>> addServiceToFirestore(
-      PlaygroundModel playground) async {
-    var check = await Connectivity().checkConnectivity();
-    if (check.contains(ConnectivityResult.mobile) ||
-        check.contains(ConnectivityResult.wifi)) {
-      return executeTryAndCatchForRepository(() async {
-        return await dataSource.addServiceToFirestore(playground);
-      });
-    } else {
-      return Left(Faliure('no internet connection'));
-    }
+      PlaygroundModel playground) {
+    return executeTryAndCatchForRepository(() async {
+      return await dataSource.addServiceToFirestore(playground);
+    });
   }
 
   @override
   Future<Either<Faliure, List<String>>> addFImagesToStorage(
       List<File> images) async {
-    var check = await Connectivity().checkConnectivity();
-    if (check.contains(ConnectivityResult.mobile) ||
-        check.contains(ConnectivityResult.wifi)) {
-      return executeTryAndCatchForRepository(() async {
-        return dataSource.addImagesToStorage(images);
-      });
-    } else {
-      return Left(Faliure('no internet connection'));
-    }
+    return executeTryAndCatchForRepository(() async {
+      return dataSource.addImagesToStorage(images);
+    });
   }
 }
