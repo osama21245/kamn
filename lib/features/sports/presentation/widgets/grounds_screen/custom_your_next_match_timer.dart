@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kamn/core/theme/app_pallete.dart';
 
 import '../../../../../core/const/constants.dart';
-import '../../../../../core/theme_data/app_palette.dart';
 import '../../../../../core/theme_data/style.dart';
 
 class CustomYourNextMatchTimer extends StatelessWidget {
@@ -17,10 +17,10 @@ class CustomYourNextMatchTimer extends StatelessWidget {
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 19.w),
       decoration: BoxDecoration(
-        color: AppPalette.lightGreenColor,
+        color: AppPallete.lightGreenColor.withOpacity(0.09),
         borderRadius: BorderRadius.circular(15.r),
         border: Border.all(
-          color: AppPalette.greenColor,
+          color: AppPallete.lightGreenColor.withOpacity(0.3),
           width: 1.w,
         ),
       ),
