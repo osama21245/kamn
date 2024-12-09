@@ -88,6 +88,8 @@ dependencies:
   injectable: ^2.5.0
   path_provider: ^2.1.5
   table_calendar: ^3.1.2
+  modal_bottom_sheet: ^3.0.0
+  geolocator: ^13.0.2
 
 
 dev_dependencies:

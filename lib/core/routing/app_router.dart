@@ -59,8 +59,9 @@ class AppRouter {
       case Routes.groundsScreen:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
-                  create: (context) =>
-                      getIt<SportsGroundsCubit>()..getPlaygrounds(),
+                  create: (context) => getIt<SportsGroundsCubit>()
+                    ..getPlaygrounds()
+                    ..getUserLocation(),
                   child: const GroundsScreen(),
                 ));
       case Routes.chooseServiceCategoryScreen:

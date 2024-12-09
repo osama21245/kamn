@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../../core/theme_data/app_palette.dart';
+import 'package:kamn/core/helpers/spacer.dart';
+import 'package:kamn/core/theme/app_pallete.dart';
 import '../../../../../core/theme_data/style.dart';
 
 class CustomFilterItem extends StatelessWidget {
@@ -19,32 +19,35 @@ class CustomFilterItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      padding: EdgeInsets.symmetric(horizontal: 5.5.w),
       decoration: BoxDecoration(
-        color: AppPalette.lightGreenColor,
+        color: AppPallete.lightGreenColor.withOpacity(0.12),
         borderRadius: BorderRadius.circular(15.r),
         border: Border.all(
-          color: AppPalette.greenColor,
+          color: AppPallete.lightGreenColor.withOpacity(0.12),
           width: 1.w,
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Icon(
             icon,
             size: 12.sp,
-            color: AppPalette.darkGreenColor,
+            color: AppPallete.darkGreenColor,
           ),
+          horizontalSpace(5.w),
           Text(
             text,
             style: Style.font10BlackColorW400,
           ),
-          IconButton(
-            onPressed: onPressed,
-            icon: Icon(
+          horizontalSpace(5.w),
+          InkWell(
+            onTap: onPressed,
+            child: Icon(
               Icons.cancel_outlined,
-              color: AppPalette.grayColor,
+              color: AppPallete.darkGreyColor,
               size: 12.sp,
             ),
           ),

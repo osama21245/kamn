@@ -27,7 +27,7 @@ class Style {
   static TextStyle font10BlackColorW400 = TextStyle(
       fontFamily: "Roboto",
       color: AppPalette.blackColor,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeightHelper.regular,
       fontSize: 10.h);
   static TextStyle font15BlackColorBold = TextStyle(
       fontFamily: "Roboto",
