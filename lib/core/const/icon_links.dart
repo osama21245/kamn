@@ -6,4 +6,6 @@ class IconLinks {
   static const String wallet = 'assets/icons/wallet.svg';
   static const String calender = 'assets/icons/calender.svg';
   static const String cash = 'assets/icons/cash.svg';
+  static const String back = 'assets/icons/back.svg';
+  static const String account = 'assets/icons/account.svg';
 }

@@ -74,6 +74,7 @@ class CustomAnalyticsChartData extends StatelessWidget {
 
   Widget bottomTitles(double xValue, TitleMeta meta) {
     return SideTitleWidget(
+      //   meta: meta.sideTitles,
       axisSide: meta.axisSide,
       space: 6, //margin top
       child: Text(

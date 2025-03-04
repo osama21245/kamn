@@ -11,7 +11,7 @@ class TextStyles {
       fontWeight: FontWeightHelper.regular,
       fontSize: 10.h);
 
-  static TextStyle fontRoboto11BlackRegular= TextStyle(
+  static TextStyle fontRoboto11BlackRegular = TextStyle(
       // renamed from font12blackRegular
       fontFamily: "Roboto",
       color: AppPallete.blackColor,
@@ -164,7 +164,6 @@ class TextStyles {
       color: AppPallete.greenColor,
       fontWeight: FontWeightHelper.semiBold,
       fontSize: 16.h);
-
 
   static TextStyle fontRoboto17AccentBlackRegular = TextStyle(
       fontFamily: "Roboto",
@@ -340,7 +339,7 @@ class TextStyles {
       color: AppPallete.whiteColor,
       fontWeight: FontWeightHelper.semiBold,
       fontSize: 20.h);
- 
+
   static TextStyle fontInter24WhiteMedium = TextStyle(
       fontFamily: "Inter",
       color: AppPallete.whiteColor,
@@ -566,6 +565,18 @@ class TextStyles {
       color: AppPallete.lightBlack,
       fontWeight: FontWeightHelper.regular,
       fontSize: 14.h);
+  static TextStyle fontCircularSpotify12accentBlackColorlight = TextStyle(
+      // renamed from font14CircularSpotifyTextGrayRegalur, fixed typo
+      fontFamily: "CircularSpotify",
+      color: AppPallete.accentBlackColor,
+      fontWeight: FontWeightHelper.light,
+      fontSize: 12.h);
+  static TextStyle fontCircularSpotify12accentBlackColorMedium = TextStyle(
+      // renamed from font14CircularSpotifyTextGrayRegalur, fixed typo
+      fontFamily: "CircularSpotify",
+      color: AppPallete.accentBlackColor,
+      fontWeight: FontWeightHelper.medium,
+      fontSize: 12.h);
   static TextStyle fontCircularSpotify14BlackRegular = TextStyle(
       // renamed from font14CircularSpotifyTextGrayRegalur, fixed typo
       fontFamily: "CircularSpotify",
@@ -631,6 +642,12 @@ class TextStyles {
       fontFamily: "CircularSpotify",
       color: AppPallete.accentBlackColor,
       fontWeight: FontWeightHelper.medium,
+      fontSize: 20.h);
+  static TextStyle fontCircularSpotify20AccentBlackBold = TextStyle(
+      // renamed from fontCircularSpotify18Medium
+      fontFamily: "CircularSpotify",
+      color: AppPallete.accentBlackColor,
+      fontWeight: FontWeightHelper.bold,
       fontSize: 20.h);
   static TextStyle fontCircularSpotify21BlackMedium = TextStyle(
       // renamed from fontCircularSpotify18Medium

@@ -15,7 +15,7 @@ class CustomWelcomeElevationButton extends StatelessWidget {
       height: 50,
       width: 308,
       child: ElevatedButton(
-        iconAlignment: IconAlignment.start,
+        // iconAlignment: IconAlignment.start,
         onPressed: () {
           Navigator.push(
             context,
