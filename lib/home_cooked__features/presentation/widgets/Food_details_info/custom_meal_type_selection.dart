@@ -15,7 +15,8 @@ class CustomMealTypeSelection extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomMealTypeSelectionState createState() => _CustomMealTypeSelectionState();
+  _CustomMealTypeSelectionState createState() =>
+      _CustomMealTypeSelectionState();
 }
 
 class _CustomMealTypeSelectionState extends State<CustomMealTypeSelection> {
@@ -41,19 +42,24 @@ class _CustomMealTypeSelectionState extends State<CustomMealTypeSelection> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          mealTypeButton("🥗Breakfast", _selectedMealType == "Breakfast", () => _onSelect("Breakfast")),
+          mealTypeButton("🥗Breakfast", _selectedMealType == "Breakfast",
+              () => _onSelect("Breakfast")),
           horizontalSpace(7.w),
-          mealTypeButton("🍽️ Lunch", _selectedMealType == "Lunch", () => _onSelect("Lunch")),
+          mealTypeButton("🍽️ Lunch", _selectedMealType == "Lunch",
+              () => _onSelect("Lunch")),
           horizontalSpace(7.w),
-          mealTypeButton("🌿 Dinner", _selectedMealType == "Dinner", () => _onSelect("Dinner")),
+          mealTypeButton("🌿 Dinner", _selectedMealType == "Dinner",
+              () => _onSelect("Dinner")),
           horizontalSpace(7.w),
-          mealTypeButton("🥐 Snacks", _selectedMealType == "Snack", () => _onSelect("Snack")),
+          //mealTypeButton(context, "🥐 Snacks", state.selectedMealType),
+      
+          mealTypeButton("🥐 Snacks", _selectedMealType == "Snack",
+              () => _onSelect("Snack")),
         ],
       ),
     );
   }
 }
-
 
 Widget mealTypeButton(String title, bool isSelected, VoidCallback onTap) {
   return ElevatedButton(
@@ -68,3 +74,19 @@ Widget mealTypeButton(String title, bool isSelected, VoidCallback onTap) {
     ),
   );
 }
+
+// Step 5: Create Meal Button Widget
+// Widget mealTypeButton(
+//     BuildContext context, String title, String? selectedMealType) {
+//   bool isSelected = title == selectedMealType;
+
+//   return ElevatedButton(
+//     onPressed: () => context.read<AddMealCubit>().selectMealType(title),
+//     style: ElevatedButton.styleFrom(
+//       backgroundColor: isSelected ? Colors.orange : Colors.grey[300],
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+//     ),
+//     child: Text(title,
+//         style: TextStyle(color: isSelected ? Colors.white : Colors.black)),
+//   );
+// }
