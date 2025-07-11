@@ -6,6 +6,7 @@ import 'package:kamn/features/sports/presentation/screens/my_profile_screen.dart
 import 'init_dependencies.dart';
 
 void main() async {
+  // make a pull request
   WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   await ScreenUtil.ensureScreenSize();
