@@ -13,6 +13,7 @@ abstract interface class UserRemoteDataSource {
   Future<void> markNotificationAsRead(String notificationId);
   Future<void> updateUserInfo(UserModel user);
   Future<String> addImagesToStorage(File images) ;
+  Future<UserModel> getUsersInfo(String uid);
 }
 
 @Injectable(as: UserRemoteDataSource)
@@ -69,5 +70,13 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           .timeout(const Duration(seconds: 30));
       return downloadUrl;
     });
+  }
+  @override
+  Future<UserModel> getUsersInfo(String uid) async {
+    final doc = await _firestoreService.firestore
+        .collection(FirebaseCollections.users).doc(uid)
+        .get();
+
+    return  UserModel.fromMap(doc.data() ??{});
   }
 }
