@@ -116,6 +116,7 @@ import '../../playground_feature/user/data/repository/user_repository.dart'
     as _i609;
 import '../../playground_feature/user/presentation/cubit/edit_profile/edit_profile_cubit.dart'
     as _i798;
+import '../../playground_feature/user/presentation/cubit/get_user_cubit/get_user_cubit.dart';
 import '../../playground_feature/user/presentation/cubit/notification/notifications_cubit.dart'
     as _i113;
 import '../common/class/firebase_storage_services.dart' as _i304;
@@ -278,6 +279,9 @@ extension GetItInjectableX on _i174.GetIt {
           getPlaygrouundsUseCase: gh<_i870.GetPlaygroundsAndFlittered>(),
           sportsGroundViewModel: gh<_i174.SportsGroundViewModel>(),
         ));
+    gh.factory<GetUserCubit>(() => GetUserCubit(
+      gh<_i609.UserRepository>(),
+    ));
     return this;
   }
 }

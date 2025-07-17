@@ -15,7 +15,7 @@ abstract interface class UserRepository {
   Future<Either<Faliure, void>> updateUserInfo(UserModel user);
     Future<Either<Faliure, String>> addImagesToStorage(
       File images) ;
-  
+  Future<Either<Faliure,UserModel>> getUsersInfo(String uid);
 }
 
 @Injectable(as: UserRepository)
@@ -56,6 +56,12 @@ class UserRepositoryImpl implements UserRepository {
       File images) async {
     return executeTryAndCatchForRepository(() async {
       return _userRemoteDataSource.addImagesToStorage(images);
+    });
+  }
+  @override
+  Future<Either<Faliure, UserModel>> getUsersInfo(String uid) {
+    return executeTryAndCatchForRepository((){
+      return _userRemoteDataSource.getUsersInfo(uid);
     });
   }
 }

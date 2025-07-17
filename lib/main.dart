@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +11,7 @@ import 'package:kamn/gym_feature/add_gym/presentation/cubits/gym_features/cubit/
 import 'package:kamn/gym_feature/gyms/presentation/Cubit/Carousel/carousel_cubit.dart';
 import 'package:kamn/gym_feature/gyms/presentation/Cubit/gym_details/gymdetails_cubit.dart';
 import 'package:kamn/init_dependencies.dart';
+import 'package:kamn/playground_feature/user/presentation/cubit/get_user_cubit/get_user_cubit.dart';
 
 import 'core/common/cubit/firebase_remote_config/firebase_remote_config_cubit.dart';
 
@@ -45,7 +47,22 @@ class MyApp extends StatelessWidget {
         //Salah's Cubit
         BlocProvider<GymFeaturesCubit>(
           create: (context) => GymFeaturesCubit(),
-        )
+        ),
+        BlocProvider(
+          create: (context) {
+            final uid = FirebaseAuth.instance.currentUser?.uid;
+            final cubit = getIt<GetUserCubit>();
+
+            if (uid != null && uid.isNotEmpty) {
+              cubit.getUserData(uid);
+            } else {
+              print("Errorrrrrrrrrrrrrrrrrrrrrrrrrrrrr Null");
+            }
+
+            return cubit;
+          },
+          lazy: false,
+        ),
       ],
       child: const ScreenUtilInit(
         designSize: Size(375, 812),
