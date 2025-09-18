@@ -11,7 +11,9 @@ class UserModel {
   final String? signFrom;
   final String? profileImage;
   final String? phoneNumber;
-   bool? spamer;
+  final bool spamer;
+  final List<String> interestedList;
+  
   UserModel({
     required this.uid,
     required this.email,
@@ -22,7 +24,8 @@ class UserModel {
     required this.signFrom,
     this.profileImage,
     this.phoneNumber,
-    this.spamer,
+    this.spamer=false,
+    this.interestedList = const [],
   });
   // Add any other fields you need
 
@@ -37,6 +40,7 @@ class UserModel {
     String? profileImage,
     String? phoneNumber,
     bool? spamer,
+    List<String>? interestedList,
   }) {
     return UserModel(
       uid: uid ?? this.uid,
@@ -49,6 +53,7 @@ class UserModel {
       profileImage: profileImage ?? this.profileImage,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       spamer: spamer ?? this.spamer,
+      interestedList: interestedList ?? this.interestedList,
     );
   }
 
@@ -64,6 +69,7 @@ class UserModel {
       'profileImage': profileImage,
       'phoneNumber': phoneNumber,
       'spamer': spamer,
+      'interestedList': interestedList,
     };
   }
 
@@ -78,7 +84,10 @@ class UserModel {
       signFrom: map['signFrom'] != null ? map['signFrom'] as String : null,
       profileImage: map['profileImage'] != null ? map['profileImage'] as String : null,
       phoneNumber: map['phoneNumber'] != null ? map['phoneNumber'] as String : null,
-      spamer: map['spamer'] != null ? map['spamer'] as bool : null,
+      spamer: map['spamer'] != null ? map['spamer'] as bool : false,
+      interestedList: map['interestedList'] != null 
+          ? List<String>.from(map['interestedList'])
+          : const [],
     );
   }
 
@@ -88,7 +97,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(uid: $uid, email: $email, name: $name, createdAt: $createdAt, type: $type, city: $city, signFrom: $signFrom, profileImage: $profileImage, phoneNumber: $phoneNumber, spamer: $spamer)';
+    return 'UserModel(uid: $uid, email: $email, name: $name, createdAt: $createdAt, type: $type, city: $city, signFrom: $signFrom, profileImage: $profileImage, phoneNumber: $phoneNumber, spamer: $spamer, interestedList: $interestedList)';
   }
 
   @override
@@ -105,7 +114,7 @@ class UserModel {
       other.signFrom == signFrom &&
       other.profileImage == profileImage &&
       other.phoneNumber == phoneNumber &&
-      other.spamer == spamer;
+      other.spamer == spamer ;
   }
 
   @override
@@ -119,6 +128,7 @@ class UserModel {
       signFrom.hashCode ^
       profileImage.hashCode ^
       phoneNumber.hashCode ^
-      spamer.hashCode;
+      spamer.hashCode ^
+      interestedList.hashCode;
   }
 }

@@ -30,6 +30,7 @@ import '../../gym_feature/gyms/data/datasources/gym_remote_data_source.dart'
 import '../../gym_feature/gyms/data/repo/gym_details_repo.dart' as _i1060;
 import '../../gym_feature/gyms/presentation/Cubit/gym_details/gymdetails_cubit.dart'
     as _i1027;
+import '../../main/presentation/cubit/bottom_nav_bar_cubit.dart' as _i1042;
 import '../../playground_feature/admin/data/data_source/analytics_data_source.dart'
     as _i366;
 import '../../playground_feature/admin/data/data_source/second_page_data_source.dart'
@@ -48,6 +49,8 @@ import '../../playground_feature/authentication/data/data_source/auth_remote_dat
     as _i774;
 import '../../playground_feature/authentication/data/repositories/auth_repository.dart'
     as _i307;
+import '../../playground_feature/authentication/presentation/cubits/on_boarding/onboarding_cubit.dart'
+    as _i1042;
 import '../../playground_feature/authentication/presentation/cubits/sign_in_cubit/sign_in_cubit.dart'
     as _i529;
 import '../../playground_feature/authentication/presentation/cubits/sign_in_cubit/sign_in_view_model.dart'
@@ -145,6 +148,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i40.PickTimeForReservationViewModel());
     gh.factory<_i174.SportsGroundViewModel>(
         () => _i174.SportsGroundViewModel());
+    gh.factory<_i1042.OnboardingCubit>(() => _i1042.OnboardingCubit());
+    gh.factory<_i1042.BottomNavBarCubit>(() => _i1042.BottomNavBarCubit());
     gh.lazySingleton<_i304.FirebaseStorageServices>(
         () => _i304.FirebaseStorageServices());
     gh.lazySingleton<_i158.FirestoreService>(() => _i158.FirestoreService());

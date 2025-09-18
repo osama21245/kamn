@@ -10,6 +10,7 @@ import 'package:kamn/gym_feature/add_gym/presentation/cubits/gym_features/cubit/
 import 'package:kamn/gym_feature/gyms/presentation/Cubit/Carousel/carousel_cubit.dart';
 import 'package:kamn/gym_feature/gyms/presentation/Cubit/gym_details/gymdetails_cubit.dart';
 import 'package:kamn/init_dependencies.dart';
+import 'package:kamn/main/presentation/cubit/bottom_nav_bar_cubit.dart';
 
 import 'core/common/cubit/firebase_remote_config/firebase_remote_config_cubit.dart';
 import 'notifications_feature/presentation/cubit/orders_notification_cubit.dart';
@@ -48,10 +49,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<GymFeaturesCubit>(
           create: (context) => GymFeaturesCubit(),
         ),
-        BlocProvider(
-          create: (context) => OrderNotificationsCubit()..fetchOrders(),
-          child: OrdersNotificationsScreen(),
-        ),
+        BlocProvider<BottomNavBarCubit>(
+          create: (context) => BottomNavBarCubit(),
+        )
       ],
       child: const ScreenUtilInit(
         designSize: Size(375, 812),

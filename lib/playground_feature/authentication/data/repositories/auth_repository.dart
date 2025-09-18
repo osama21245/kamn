@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kamn/core/helpers/secure_storage_helper.dart';
 import 'package:kamn/playground_feature/authentication/presentation/cubits/sign_in_cubit/sign_in_view_model.dart';
 import '../../../../core/erorr/faliure.dart';
 import '../../../../core/utils/try_and_catch.dart';
@@ -47,7 +48,7 @@ class AuthRepositoryImpl implements AuthRepository {
         password: password,
         name: name,
       );
-
+      final interestedList=await SecureStorageHelper.getInterestedList();
       final userModel = UserModel(
           signFrom: SignInMethods.emailAndPassword.name,
           uid: userCredential.user!.uid,
@@ -56,6 +57,7 @@ class AuthRepositoryImpl implements AuthRepository {
           email: email,
           name: name,
           createdAt: DateTime.now(),
+          interestedList:interestedList ,
           type: type);
 
       return userModel;

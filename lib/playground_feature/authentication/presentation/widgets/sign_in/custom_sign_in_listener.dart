@@ -32,7 +32,7 @@ class CustomSignInListener extends StatelessWidget {
           signInCubit.getUser(uid: state.uid ?? "");
         } else if (state.isSuccessGetData) {
           await appUserCubit.saveUserData(state.userModel);
-          context.pushNamedAndRemoveUntil(Routes.selectCategoryScreen,predicate:  (route) => false);
+          context.pushNamedAndRemoveUntil(Routes.mainScreen,predicate:  (route) => false);
         } else if (state.isFailureGetData) {
           showSnackBar(context, state.erorrMessage ?? "");
           signInCubit.signOut();
@@ -40,7 +40,7 @@ class CustomSignInListener extends StatelessWidget {
           signInCubit.setUserData(userModel: state.userModel!); // to firestore
         } else if (state.isSetUserDataSuccess) {
           await appUserCubit.saveUserData(state.userModel); // local
-          context.pushNamedAndRemoveUntil(Routes.selectCategoryScreen,predicate:  (route) => false);
+          context.pushNamedAndRemoveUntil(Routes.mainScreen,predicate:  (route) => false);
 
           
         } else if (state.isGoogleAuthFailure) {

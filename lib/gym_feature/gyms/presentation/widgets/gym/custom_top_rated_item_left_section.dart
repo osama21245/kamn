@@ -9,10 +9,12 @@ class CustomTopRatedItemLeftSection extends StatelessWidget {
       {super.key,
       required this.gymPrice,
       required this.gymDuration,
-      required this.gymImage});
+      required this.gymImage,
+      required this.isAsset});
   final String gymPrice;
   final String gymDuration;
   final String gymImage;
+  final bool isAsset;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,7 +23,11 @@ class CustomTopRatedItemLeftSection extends StatelessWidget {
         SizedBox(
             height: 70,
             width: 70,
-            child: Image(fit: BoxFit.cover, image: NetworkImage(gymImage))),
+            child: Image(
+                fit: BoxFit.contain,
+                image: isAsset == true
+                    ? AssetImage(gymImage)
+                    : NetworkImage(gymImage))),
         verticalSpace(10.h),
         Container(
           width: 130,

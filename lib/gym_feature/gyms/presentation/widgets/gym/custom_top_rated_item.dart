@@ -14,7 +14,9 @@ class CustomTopRatedItem extends StatelessWidget {
       required this.gymDescription,
       required this.gymLocation,
       required this.gymrate,
-      required this.gymImage, this.onTap});
+      required this.gymImage,
+      required this.isAsset,
+      this.onTap});
   final String gymPrice;
   final String gymDuration;
   final String gymName;
@@ -22,7 +24,8 @@ class CustomTopRatedItem extends StatelessWidget {
   final String gymLocation;
   final String gymrate;
   final String gymImage;
- final void Function()? onTap;
+  final bool isAsset;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -42,7 +45,7 @@ class CustomTopRatedItem extends StatelessWidget {
                 child: CustomTopRatedItemLeftSection(
                   gymDuration: gymDuration,
                   gymPrice: gymPrice,
-                  gymImage: gymImage,
+                  gymImage: gymImage, isAsset: isAsset,
                 ),
               ),
               horizontalSpace(20.w),

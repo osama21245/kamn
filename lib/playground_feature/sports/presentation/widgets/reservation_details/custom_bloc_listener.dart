@@ -20,8 +20,7 @@ class CustomBlocListener extends StatelessWidget {
           AlertDialogUtils.showAlert(context: context,title:'Cancellation Window Expired' , content: "The cancellation window has expired. If you still wish to cancel, a cancellation fee will apply.",firstbutton: 'close',secondbutton: 'contiune',secondAction: 
           (){
             var user = context.read<AppUserCubit>().state.user;
-            user?.spamer=true;
-            //TODO : need to handle with transcation call back 
+user=user?.copyWith(spamer:true)       ;     //TODO : need to handle with transcation call back 
             context.read<AppUserCubit>().updateUser(user!, {"spamer":true});
             context.read<ReservationDetailsCubit>().deleteReservation(reservation);
           }

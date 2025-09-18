@@ -82,6 +82,8 @@ class AppPallete {
   static const Color lightBlue = Color(0xff2841BD);
   static const Color lighterBlue = Color(0xff889DDD);
   static const Color lightYellow = Color(0xffFFDB81);
+  static const Color babyBlue = Color(0xffBBC8FF);
+  static const Color blue = Color(0xff234EFE);
 
   static const List<Color> radialGradientForSearchUi = [
     Color.fromARGB(5, 96, 96, 96), // Very weak in the center

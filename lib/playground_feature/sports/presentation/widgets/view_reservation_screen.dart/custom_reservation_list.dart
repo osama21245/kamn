@@ -73,7 +73,7 @@ class CustomReservationList extends StatelessWidget {
 
                         playgroundIdList
                             .add(data[index].ground?.playgroundId ?? '');
-                        await SecureStorageHelper.saveStringList(
+                        await SecureStorageHelper.saveRatingList(
                             playgroundIdList);
                             await context.read<ViewReservationCubit>().addRating(data[index].ground?.playgroundId ?? '', response.rating);
 

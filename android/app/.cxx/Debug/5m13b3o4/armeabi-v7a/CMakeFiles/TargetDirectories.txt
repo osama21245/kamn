@@ -1,0 +1,2 @@
+D:/apps/kamn/android/app/.cxx/Debug/5m13b3o4/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/apps/kamn/android/app/.cxx/Debug/5m13b3o4/armeabi-v7a/CMakeFiles/rebuild_cache.dir

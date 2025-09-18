@@ -22,4 +22,16 @@ class ImageLinks {
   static const String plusBtn = "assets/images/plus_btn.png";
 
   static const String testrestaurant = 'assets/images/testrestaurant.png';
+  static const String menu = "assets/icons/Menu.svg";
+  static const String notification = "assets/icons/notification.png";
+  static const String user = "assets/images/userCircle.png";
+  static const String footballCourt = "assets/images/court1.png";
+  static const String footballCourt2 = "assets/images/court2.png";
+  static const String gymImg = "assets/images/gym.png";
+  static const String key = "assets/images/key.png";
+  static const String football = "assets/images/football.png";
+  static const String anyTime = "assets/images/anytime.png";
+  static const String grilled = "assets/images/grilled.png";
+  static const String chickpea = "assets/images/chickpea.png";
+  static const String delivery = "assets/images/delivery.png";
 }

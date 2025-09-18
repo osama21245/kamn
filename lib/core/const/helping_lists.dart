@@ -45,3 +45,36 @@ List<String> doctorLevelsCardNumberImages = [
   "assets/image/number_3.png",
   "assets/image/number_4.png",
 ];
+List featuresTitle = [
+  'Reserve a Court',
+  'Book a Gym',
+  'Order Healthy Meals',
+];
+List featuresDes = [
+  'Football, basketball, tennis & more!',
+  'Find available slots at nearby gyms',
+  'Fresh meals from home cooks & restaurants',
+];
+List featuresImg = [
+  'assets/images/play.png',
+  'assets/images/gymtools.png',
+  'assets/images/healthy.png',
+];
+List featuresColor = [
+  const LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Colors.transparent, Colors.black87],
+  ),
+  const LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Colors.transparent, Colors.black87],
+  ),
+  const LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Colors.transparent, Colors.black87],
+  ),
+  'assets/images/healthy.png',
+];

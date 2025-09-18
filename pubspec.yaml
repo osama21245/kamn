@@ -69,6 +69,7 @@ dependencies:
   timeline_tile: ^2.0.0
   timelines_plus: ^1.0.6
   readmore: ^3.0.0
+  sliver_snap: ^2.1.0
   
 
 dev_dependencies:

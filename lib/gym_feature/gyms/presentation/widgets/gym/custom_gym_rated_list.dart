@@ -33,6 +33,7 @@ class CustomGymRatedList extends StatelessWidget {
               gymName: gym.name??'',
               gymPrice: '10000',
               gymrate: '4.8',
+              isAsset: false,
               gymImage: gym.logoUrl??'',
               onTap: () {
                 Navigator.push(

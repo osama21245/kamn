@@ -250,3 +250,10 @@ extension SportExtension on Sport {
     }
   }
 }
+final List<String> categories = [
+  'All',
+  'Gyms',
+  'Courts',
+  'Home Cooks',
+  'Restaurants'
+];
