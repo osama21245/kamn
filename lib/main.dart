@@ -12,6 +12,8 @@ import 'package:kamn/gym_feature/gyms/presentation/Cubit/gym_details/gymdetails_
 import 'package:kamn/init_dependencies.dart';
 
 import 'core/common/cubit/firebase_remote_config/firebase_remote_config_cubit.dart';
+import 'notifications_feature/presentation/cubit/orders_notification_cubit.dart';
+import 'notifications_feature/presentation/screens/orders_notifications.dart';
 
 void main() async {
   await initDependencies();
@@ -45,7 +47,11 @@ class MyApp extends StatelessWidget {
         //Salah's Cubit
         BlocProvider<GymFeaturesCubit>(
           create: (context) => GymFeaturesCubit(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => OrderNotificationsCubit()..fetchOrders(),
+          child: OrdersNotificationsScreen(),
+        ),
       ],
       child: const ScreenUtilInit(
         designSize: Size(375, 812),

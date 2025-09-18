@@ -22,10 +22,11 @@ class _FoodDetailsScreenState extends State<FoodDetailsScreen> {
     'assets/images/food.png',
     'assets/images/food.png',
   ];
-
+////////////////
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /////////////
       backgroundColor: Colors.white,
       body: Stack(
         children: [
