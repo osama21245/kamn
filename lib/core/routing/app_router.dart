@@ -65,6 +65,7 @@ import 'package:kamn/playground_feature/sports_service_providers/presentation/sc
 import 'package:kamn/playground_feature/sports_service_providers/presentation/screens/success_service_provider_screen.dart';
 import 'package:kamn/test_login.dart';
 
+import '../../notifications_feature/presentation/screens/orders_notifications.dart';
 import '../../playground_feature/authentication/presentation/screens/on_boarding_screen.dart';
 import '../../playground_feature/authentication/presentation/screens/sign_in_screen.dart';
 import '../../playground_feature/authentication/presentation/screens/sign_up_screen.dart';
@@ -329,7 +330,9 @@ class AppRouter {
         create: (context) => getIt<MembershipOfferCubit>()..getGymIdFromSecureStorage(),
         child: const MembershipOfferScreen(),
       ));
-      
+      case Routes.ordersNotificationsScreen:
+        return MaterialPageRoute(
+            builder: (context) => OrdersNotificationsScreen());
 
       default:
         return MaterialPageRoute(

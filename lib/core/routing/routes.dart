@@ -40,6 +40,7 @@ class Routes {
   static const String selectCategoryScreen = '/selectCategoryScreen';
   static const String editProfileScreen = '/editProfileScreen';
   static const String gymScreen = '/gymScreen';
+  static const String ordersNotificationsScreen = '/ordersNotificationsScreen';
 
 
 
