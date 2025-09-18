@@ -12,6 +12,9 @@ import 'package:kamn/healthy_food_features/presentation/screens/order_screen.dar
 import 'package:kamn/healthy_food_features/presentation/widgets/custom_my_cart/custom_app_bar.dart';
 import 'package:kamn/healthy_food_features/presentation/widgets/custom_my_cart/custom_mycart_card.dart';
 
+import '../../../core/routing/routes.dart';
+import '../../../payment_feature/presentation/screens/payment_options.dart';
+
 class MyCartScreen extends StatelessWidget {
   const MyCartScreen({super.key});
 
@@ -155,8 +158,13 @@ class MyCartScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const OrderScreen()),
+                          builder: (context) => BlocProvider.value(
+                            value: context.read<AppUserCubit>(),
+                            child: const OrderPaymentOptionsScreen(),
+                          ),
+                        ),
                       );
+
                     },
                     child: Container(
                       width: 167.w,
@@ -167,7 +175,7 @@ class MyCartScreen extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          'Place Order',
+                          'Payment',
                           style: TextStyles
                               .fontCircularSpotify14AccentBlackMedium
                               .copyWith(color: AppPallete.whiteColor),

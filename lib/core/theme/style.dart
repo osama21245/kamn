@@ -713,6 +713,13 @@ class TextStyles {
     fontWeight: FontWeightHelper.regular,
   );
 
+  static TextStyle circularSpotify14RegularLightGrey = TextStyle(
+    color: AppPallete.grey,
+    fontSize: 14.h,
+    fontFamily: 'CircularSpotifyTxT',
+    fontWeight: FontWeightHelper.regular,
+  );
+
   static TextStyle circularSpotify16BoldDarkBlack = TextStyle(
     color: AppPallete.darkBlack,
     fontSize: 16.h,

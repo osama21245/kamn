@@ -40,7 +40,9 @@ class Routes {
   static const String selectCategoryScreen = '/selectCategoryScreen';
   static const String editProfileScreen = '/editProfileScreen';
   static const String gymScreen = '/gymScreen';
-
+  static const String orderPaymentOptionsScreen = '/orderPaymentOptionsScreen';
+  static const String paymentResultScreen = '/paymentResultScreen';
+  static const String orderScreen = '/orderScreen';
 
 
     static const String addGymScreen='/addGymScreen';

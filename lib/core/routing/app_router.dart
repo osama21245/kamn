@@ -6,6 +6,7 @@ import 'package:kamn/core/di/di.dart';
 import 'package:kamn/core/routing/routes.dart';
 import 'package:kamn/gym_feature/add_gym/presentation/screens/add_gym_screen.dart';
 import 'package:kamn/gym_feature/gyms/presentation/pages/gyms_screen.dart';
+import 'package:kamn/healthy_food_features/presentation/screens/order_screen.dart';
 import 'package:kamn/playground_feature/authentication/presentation/cubits/sign_in_cubit/sign_in_cubit.dart';
 import 'package:kamn/playground_feature/authentication/presentation/cubits/sign_up_cubit/sign_up_cubit.dart';
 import 'package:kamn/playground_feature/payment/presentation/cubits/procced_payment_cubit/procced_payment_cubit.dart';
@@ -57,6 +58,8 @@ import 'package:kamn/playground_feature/sports_service_providers/presentation/sc
 import 'package:kamn/playground_feature/sports_service_providers/presentation/screens/success_service_provider_screen.dart';
 import 'package:kamn/test_login.dart';
 
+import '../../payment_feature/presentation/screens/payment_options.dart';
+import '../../payment_feature/presentation/screens/payment_res.dart';
 import '../../playground_feature/authentication/presentation/screens/on_boarding_screen.dart';
 import '../../playground_feature/authentication/presentation/screens/sign_in_screen.dart';
 import '../../playground_feature/authentication/presentation/screens/sign_up_screen.dart';
@@ -293,12 +296,23 @@ class AppRouter {
                   notification: settings.arguments as NotificationsModel,
                 ));
 
-                /// GYM Features
+      /// GYM Features
       case Routes.addGymScreen:
-        return MaterialPageRoute(
-            builder: (context) => const AddGymScreen());
+        return MaterialPageRoute(builder: (context) => const AddGymScreen());
       case Routes.gymScreen:
         return MaterialPageRoute(builder: (context) => const GymsScreen());
+
+      //New Payment Features screen
+      case Routes.orderPaymentOptionsScreen:
+        return MaterialPageRoute(
+          builder: (context) => OrderPaymentOptionsScreen(),
+        );
+      case Routes.paymentResultScreen:
+        return MaterialPageRoute(
+            builder: (context) => const PaymentResultScreen());
+      case Routes.orderScreen:
+        return MaterialPageRoute(builder: (context) => const OrderScreen());
+
       default:
         return MaterialPageRoute(
             builder: (context) => Scaffold(

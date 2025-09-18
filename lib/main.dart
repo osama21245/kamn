@@ -44,6 +44,10 @@ import 'package:kamn/healthy_food_features/data/repositories/test_meals_reposito
 import 'package:kamn/healthy_food_features/presentation/cubit/order_cubit.dart';
 import 'package:kamn/healthy_food_features/presentation/cubit/test_meals_cubit.dart';
 import 'package:kamn/init_dependencies.dart';
+import 'package:kamn/payment_feature/domain/useCase/send_order_notification.dart';
+import 'package:kamn/payment_feature/presentation/cubit/send_order_notification/order_notification_cubit.dart';
+import 'package:kamn/payment_feature/presentation/screens/payment_options.dart';
+import 'core/common/class/firestore_services.dart';
 ///////
 // void main() {
 //   runApp(DashboardApp());
@@ -101,6 +105,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => TestMealsCubit(TestMealsRepositoryImpl(
                 TestMealsDataSourceImpl(FirebaseFirestore.instance)))),
+        BlocProvider(
+          create: (_) => SendOrderNotificationCubit(
+              SendOrderNotificationUseCase(FirestoreService())),
+          child: OrderPaymentOptionsScreen(),
+        ),
       ],
       child: const ScreenUtilInit(
         designSize: Size(375, 812),

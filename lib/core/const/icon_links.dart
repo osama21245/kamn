@@ -6,6 +6,7 @@ class IconLinks {
   static const String wallet = 'assets/icons/wallet.svg';
   static const String calender = 'assets/icons/calender.svg';
   static const String cash = 'assets/icons/cash.svg';
+  static const String visa = 'assets/icons/visa.svg';
 
   static const String slidersHorizontal = 'assets/icons/SlidersHorizontal.svg';
   static const String bell = 'assets/icons/Bell.svg';
@@ -30,4 +31,5 @@ class IconLinks {
   static const String steak = 'assets/icons/Meat.svg';
   static const String fish = 'assets/icons/fish 1.svg';
   // static const String cart = 'assets/icons/Cart Large .svg';
+  static const String cashIcon = "assets/icons/cash.png";
 }
