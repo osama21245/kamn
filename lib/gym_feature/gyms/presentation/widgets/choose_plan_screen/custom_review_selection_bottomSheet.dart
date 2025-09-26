@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kamn/core/common/cubit/app_user/app_user_cubit.dart';
+import 'package:kamn/core/routing/routes.dart';
 import 'package:kamn/core/theme/app_pallete.dart';
 import 'package:kamn/core/theme/font_weight_helper.dart';
 import 'package:kamn/core/theme/style.dart';
 import 'package:kamn/gym_feature/add_gym/presentation/cubits/add_gym/add_gym_state.dart';
 import 'package:kamn/gym_feature/gyms/data/models/gym_model.dart';
+import 'package:kamn/gym_feature/gyms/data/models/gym_reservation.dart';
 import 'package:kamn/gym_feature/gyms/presentation/widgets/choose_plan_screen/custom_badge.dart';
-
 
 class CustomReviewSelectionBottomSheet extends StatelessWidget {
   final Map<Feature, int> selectedFeatures;
   final int totalPrice;
   final VoidCallback onEditSelection;
+  final GymModel gym;
 
   const CustomReviewSelectionBottomSheet({
     super.key,
     required this.selectedFeatures,
     required this.totalPrice,
     required this.onEditSelection,
+    required this.gym,
   });
 
   @override
@@ -65,7 +70,8 @@ class CustomReviewSelectionBottomSheet extends StatelessWidget {
                   final quantity = entry.value;
                   return Container(
                     margin: EdgeInsets.only(bottom: 5.h),
-                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                     decoration: const BoxDecoration(
                       color: AppPallete.whiteColor,
                       borderRadius: BorderRadius.all(Radius.circular(29)),
@@ -85,8 +91,10 @@ class CustomReviewSelectionBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(width: 8.w),
                               CustomBadge(
-                                label: "${feature.price}/${feature.pricingOption?.name}",
-                                color: feature.pricingOption!.getBackgroundColor(feature.pricingOption),
+                                label:
+                                    "${feature.price}/${feature.pricingOption?.name}",
+                                color: feature.pricingOption!
+                                    .getBackgroundColor(feature.pricingOption),
                               ),
                             ],
                           ),
@@ -102,7 +110,8 @@ class CustomReviewSelectionBottomSheet extends StatelessWidget {
                             ),
                             Container(
                               margin: EdgeInsets.only(left: 8.w),
-                              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w, vertical: 2.h),
                               decoration: BoxDecoration(
                                 color: Colors.grey.shade200,
                                 borderRadius: BorderRadius.circular(40.r),
@@ -139,13 +148,12 @@ class CustomReviewSelectionBottomSheet extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "Total: ",
-                      style: TextStyles.fontCircularSpotify12BlackRegular.copyWith(fontWeight: FontWeightHelper.light)
-                    ),
+                        text: "Total: ",
+                        style: TextStyles.fontCircularSpotify12BlackRegular
+                            .copyWith(fontWeight: FontWeightHelper.light)),
                     TextSpan(
-                      text: "$totalPrice£GP",
-                      style:TextStyles.fontCircularSpotify12BlackMedium
-                    ),
+                        text: "$totalPrice£GP",
+                        style: TextStyles.fontCircularSpotify12BlackMedium),
                   ],
                 ),
               ),
@@ -179,7 +187,21 @@ class CustomReviewSelectionBottomSheet extends StatelessWidget {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle Proceed to Payment
+                    Navigator.of(context).pushNamed(Routes.paymentOptionsScreen,
+                        arguments: GymReservation(
+                          isConfirmed: false,
+                          gym: gym,
+                          user: context.read<AppUserCubit>().state.user!,
+                          reservationDate: DateTime.now(),
+                          price:totalPrice.toDouble() ,
+                          plan: Plan(
+                            planName: "Custome Plan",
+                            isDiscount: false,
+                            is247Days: true,
+                            is24Hours: true,
+                            features: selectedFeatures.keys.toList(),
+                          ),
+                        ));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,

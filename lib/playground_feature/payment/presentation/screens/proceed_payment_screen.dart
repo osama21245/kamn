@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kamn/core/helpers/spacer.dart';
 import 'package:kamn/core/routing/routes.dart';
 import 'package:kamn/core/theme/app_pallete.dart';
+import 'package:kamn/gym_feature/gyms/data/models/gym_reservation.dart';
 import 'package:kamn/playground_feature/payment/presentation/cubits/procced_payment_cubit/procced_payment_cubit.dart';
 import 'package:kamn/playground_feature/payment/presentation/widgets/payment_options/custom_button.dart';
 import 'package:kamn/playground_feature/payment/presentation/widgets/proceed_payment/custom_price_payment_details.dart';
@@ -14,20 +17,20 @@ import 'package:kamn/playground_feature/sports/presentation/widgets/reservation_
 
 class ProceedPaymentScreen extends StatelessWidget {
   const ProceedPaymentScreen({super.key, required this.reservationModel});
-  final ReservationModel reservationModel;
+  final GymReservation reservationModel;
 
   @override
   Widget build(BuildContext context) {
+    log("${reservationModel.toString()}");
     return BlocListener<ProccedPaymentCubit, ProccedPaymentState>(
       listener: (context, state) {
         if (state.isSuccess) {
-          Navigator.pushNamedAndRemoveUntil(context, Routes.reservationScreen,(rpute)=>false,
-              arguments: reservationModel);
-          showDialog(
-              context: context,
-              builder: (context) => CustomSuccessAlertDailog(
-                    reservationModel: reservationModel,
-                  ));
+          Navigator.pushNamedAndRemoveUntil(context, Routes.gymScreen,(route) => false,);
+          // showDialog(
+          //     context: context,
+          //     builder: (context) => CustomSuccessAlertDailog(
+          //           reservationModel: reservationModel,
+          //         ));
         }
       },
       child: Scaffold(
@@ -58,10 +61,9 @@ class ProceedPaymentScreen extends StatelessWidget {
         ),
         bottomNavigationBar: CustomButton(
             onTap: () {
-              reservationModel.paymentMethod = 'cash';
               context
                   .read<ProccedPaymentCubit>()
-                  .onSubmitReservation(reservationModel);
+                  .onSubmitReservation(reservationModel.copyWith(paymentOption: PaymentOption.cash));
             },
             text: 'Proceed payment'),
       ),

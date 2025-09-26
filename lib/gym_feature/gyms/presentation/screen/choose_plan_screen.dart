@@ -24,6 +24,7 @@ final GymModel gymModel;
         return CustomReviewSelectionBottomSheet(
               selectedFeatures: state.selectedFeatures ?? {},
               totalPrice: context.read<GymDetailsCubit>().totalPrice,
+              gym: gymModel,
           onEditSelection: () {
             Navigator.pop(context);
           },

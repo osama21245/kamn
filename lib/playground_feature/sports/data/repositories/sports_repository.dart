@@ -1,6 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kamn/core/erorr/faliure.dart';
+import 'package:kamn/gym_feature/gyms/data/models/gym_reservation.dart';
 import 'package:kamn/playground_feature/sports/data/models/reservation_model.dart';
 import '../../../../core/utils/try_and_catch.dart';
 import '../data_source/sports_remote_data_source.dart';
@@ -8,8 +9,8 @@ import '../models/playground_model.dart';
 
 abstract class SportsRepository {
   Future<Either<Faliure, List<PlaygroundModel>>> getPlaygrounds();
-  Future<Either<Faliure, ReservationModel>> submitReservation(
-      ReservationModel reservation);
+  Future<Either<Faliure, GymReservation>> submitReservation(
+      GymReservation reservation);
   Future<Either<Faliure, void>> updateState(
       String playgroundId, Map<String, dynamic> data);
   Future<Either<Faliure, void>> setData(
@@ -38,8 +39,8 @@ class SportsRepositoryImpl implements SportsRepository {
   }
 
   @override
-  Future<Either<Faliure, ReservationModel>> submitReservation(
-      ReservationModel reservation) {
+  Future<Either<Faliure, GymReservation>> submitReservation(
+      GymReservation reservation) {
     return executeTryAndCatchForRepository(() async {
       return await _remoteDataSource.submitReservation(reservation);
     });

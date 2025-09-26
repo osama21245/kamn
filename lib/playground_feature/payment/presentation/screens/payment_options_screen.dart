@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kamn/core/helpers/spacer.dart';
 import 'package:kamn/core/routing/routes.dart';
 import 'package:kamn/core/theme/app_pallete.dart';
+import 'package:kamn/gym_feature/gyms/data/models/gym_reservation.dart';
 import 'package:kamn/playground_feature/payment/presentation/cubits/payment_options_cubit/payment_options_cubit.dart';
 import 'package:kamn/playground_feature/payment/presentation/cubits/payment_options_cubit/payment_options_state.dart';
 import 'package:kamn/playground_feature/payment/presentation/widgets/payment_options/custom_button.dart';
@@ -18,7 +19,7 @@ import '../cubits/payment_options_cubit/payment_options_view_model.dart';
 
 class PaymentOptionsScreen extends StatelessWidget {
   const PaymentOptionsScreen({super.key, required this.reservationModel});
-  final ReservationModel reservationModel;
+  final GymReservation reservationModel;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class PaymentOptionsScreen extends StatelessWidget {
                 currentOption: state.currentOption,
                 itemOnTap: (index) =>
                     PaymentOptionsCubit.get(context).changePaymentOption(index),
-                    isCashActive:reservationModel.sessions!.length>2 ,
+                    isCashActive:false ,
               );
             },
           ),

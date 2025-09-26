@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kamn/gym_feature/gyms/data/models/gym_reservation.dart';
 import 'package:kamn/playground_feature/sports/data/models/reservation_model.dart';
 import 'package:kamn/playground_feature/sports/data/repositories/sports_repository.dart';
 
@@ -12,7 +13,7 @@ class ProccedPaymentCubit extends Cubit<ProccedPaymentState> {
       : super(const ProccedPaymentState(
           state: ProccedPaymentStatus.initial,
         ));
-  Future<void> onSubmitReservation(ReservationModel reservation) async {
+  Future<void> onSubmitReservation(GymReservation reservation) async {
     emit(state.copyWith(state: ProccedPaymentStatus.loading));
     var response = await sportsRepository.submitReservation(reservation);
     response.fold((error) {

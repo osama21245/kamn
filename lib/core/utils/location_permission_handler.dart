@@ -47,9 +47,10 @@ class LocationPermissionHandler {
     if (!hasPermission) return null;
 
     try {
-      return await Geolocator.getCurrentPosition(
+      final position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
+      return position;
     } catch (e) {
       print('Error getting location: ${e.toString()}');
       return null;

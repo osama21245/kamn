@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kamn/core/common/entities/user_model.dart';
 import 'package:kamn/core/erorr/faliure.dart';
 import 'package:kamn/core/utils/try_and_catch.dart';
 import 'package:kamn/gym_feature/gyms/data/datasources/gym_remote_data_source.dart';
@@ -10,6 +11,7 @@ abstract class GymDetailsRepository {
   Future<List<GymModel>> getAllGyms();
   Future<Either<Faliure, List<Feature>>> getGymFeatures(String gymId);
   Future<Either<Faliure, List<Plan>>> getGymPlans(String gymId);
+  Future<Either<Faliure, UserModel>> getUserById(String userId);
 }
 
 @Injectable(as: GymDetailsRepository)
@@ -58,6 +60,15 @@ class GymDetailsRepositoryImpl implements GymDetailsRepository {
         return plans
             .map((element) => Plan.fromMap(element))
             .toList();
+      },
+    );
+  }
+  @override
+  Future<Either<Faliure, UserModel>> getUserById(String userId) {
+    return executeTryAndCatchForRepository(
+      () async {
+        final user = await remoteDataSource.getUserById(userId);
+        return UserModel.fromMap(user ?? {});
       },
     );
   }

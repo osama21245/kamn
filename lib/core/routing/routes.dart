@@ -51,6 +51,8 @@ class Routes {
   static const String selectPlanFeaturesScreen = '/selectPlanFeaturesScreen';
   static const String chooseMempershipPlanScreen = '/chooseMempershipPlanScreen';
   static const String choosePlanScreen = '/choosePlanScreen';
+  static const String gymReservationsScreen = '/gymReservationsScreen';
+
 
 
 

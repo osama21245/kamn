@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kamn/core/common/cubit/app_user/app_user_cubit.dart';
 import 'package:kamn/core/const/image_links.dart';
 import 'package:kamn/core/theme/style.dart';
 
@@ -16,16 +18,24 @@ class CustomeDrawerHeader extends StatelessWidget {
           backgroundImage: AssetImage(ImageLinks.user),
         ),
         const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Mahmoud Sayed", style: TextStyles.fontInter16BlackSemiBold),
-            const SizedBox(height: 4),
-            Text(
-              "San Stefano, Alex     ⛅ 21°C",
-              style: TextStyles.fontCircularSpotify10BlackRegular,
-            ),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.read<AppUserCubit>().state.user?.name ?? "Mahmoud Sayed",
+                style: TextStyles.fontInter16BlackSemiBold,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                context.read<AppUserCubit>().state.location ??
+                    "San Stefano, Alex     ⛅ 21°C",
+                style: TextStyles.fontCircularSpotify10BlackRegular,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ],
+          ),
         ),
       ],
     );

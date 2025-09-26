@@ -87,7 +87,7 @@ class GymDetailsScreen extends StatelessWidget {
                     Text("Gym Owner",
                         style: TextStyles.fontCircularSpotify20AccentBlackMedium),
                     const SizedBox(height: 8),
-                    const GymOwnerRow(),
+                     GymOwnerRow(userid: gym.serviceProviderId??""),
                     const SizedBox(height: 16),
                     ButtonsRow(gym: gym),
                     verticalSpace(20),

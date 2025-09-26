@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kamn/core/common/cubit/app_user/app_user_state.dart';
 import 'package:kamn/playground_feature/authentication/data/repositories/auth_repository.dart';
@@ -143,12 +147,13 @@ class AppUserCubit extends Cubit<AppUserState> {
         user: null,
       ));
     });
- 
-}
- Future<void> updateUser (UserModel user,Map<String, dynamic> changedAttributes) async {
-  emit(state.copyWith(
-        state: AppUserStates.loading,
-      ));
+  }
+
+  Future<void> updateUser(
+      UserModel user, Map<String, dynamic> changedAttributes) async {
+    emit(state.copyWith(
+      state: AppUserStates.loading,
+    ));
     final res = await authRepository.updateUser(user.uid, changedAttributes);
     res.fold((l) {
       emit(state.copyWith(
@@ -163,7 +168,35 @@ class AppUserCubit extends Cubit<AppUserState> {
     });
   }
 
-  bool isSpammer(){
-    return state.user?.spamer??false;
+  Future<void> getLocationName(double lat, double lng) async {
+    try {
+      // Convert coordinates to placemarks
+      final placemarks = await placemarkFromCoordinates(
+        lat,
+        lng,
+      );
+
+      if (placemarks.isNotEmpty) {
+        final place = placemarks.first;
+        final city = place.locality ?? '';
+        final area = place.administrativeArea ?? '';
+        final country = place.country ?? '';
+
+        final locationName =
+            [city, area, country].where((e) => e.isNotEmpty).join(', ');
+        // Update state with location
+        emit(state.copyWith(
+          location: locationName,
+        ));
+
+      }
+    } catch (e) {
+      debugPrint('Error getting location: $e');
+      emit(state.copyWith(location: "No location found"));
+    }
+  }
+
+  bool isSpammer() {
+    return state.user?.spamer ?? false;
   }
 }

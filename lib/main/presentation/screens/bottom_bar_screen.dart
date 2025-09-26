@@ -28,13 +28,14 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       ),
       body: BlocBuilder<BottomNavBarCubit, BottomNavBarState>(
         builder: (context, state) {
+          print('Current index: ${state.currentIndex}'); // Debug print
           return IndexedStack(
             index: state.currentIndex,
             children: const [
               HomeMainInterface(),
               ExploreScreen(),
-              HomeMainInterface(),
-              HomeMainInterface(),
+              Center(child: Text('Screen 3')),
+              Center(child: Text('Screen 4')),
             ],
           );
         },

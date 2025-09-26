@@ -20,7 +20,7 @@ class GymModel {
   final List<Feature>? features;
   final List<OpenDuration>? openDuration;
   final bool? isFullTimeAccess;
-  final String? userId;
+  final String? serviceProviderId;
   GymModel({
     this.id,
     this.name,
@@ -37,7 +37,7 @@ class GymModel {
     this.features,
     this.openDuration,
     this.isFullTimeAccess,
-    this.userId,
+    this.serviceProviderId,
   });
 
   GymModel copyWith({
@@ -56,7 +56,7 @@ class GymModel {
     List<Feature>? features,
     List<OpenDuration>? openDuration,
     bool? isFullTimeAccess,
-    String? userId,
+    String? serviceProviderId,
   }) {
     return GymModel(
       id: id ?? this.id,
@@ -74,7 +74,7 @@ class GymModel {
       features: features ?? this.features,
       openDuration: openDuration ?? this.openDuration,
       isFullTimeAccess: isFullTimeAccess ?? this.isFullTimeAccess,
-      userId: userId ?? this.userId,
+      serviceProviderId: serviceProviderId ?? this.serviceProviderId,
     );
   }
 
@@ -95,7 +95,7 @@ class GymModel {
       'features': features?.map((x) => x.toMap()).toList(),
       'openDuration': openDuration?.map((x) => x.toMap()).toList(),
       'isFullTimeAccess': isFullTimeAccess,
-      'userId': userId,
+      'serviceProviderId': serviceProviderId,
     };
   }
 
@@ -151,7 +151,7 @@ class GymModel {
       isFullTimeAccess: map['isFullTimeAccess'] != null
           ? map['isFullTimeAccess'] as bool
           : null,
-      userId: map['userId'] != null ? map['userId'] as String : null,
+      serviceProviderId: map['serviceProviderId'] != null ? map['serviceProviderId'] as String : null,
     );
   }
 
@@ -162,7 +162,7 @@ class GymModel {
 
   @override
   String toString() {
-    return 'GymModel(id: $id, name: $name, uniqueName: $uniqueName, address: $address, imageUrl: $imagesUrl, logoUrl: $logoUrl, description: $description, phoneNumber: $phoneNumber, ratings: $ratings, reviews: $reviews, offers: $offers, scoialMediaLinks: $scoialMediaLinks, features: $features, openDuration: $openDuration, isFullTimeAccess: $isFullTimeAccess, userId: $userId)';
+    return 'GymModel(id: $id, name: $name, uniqueName: $uniqueName, address: $address, imageUrl: $imagesUrl, logoUrl: $logoUrl, description: $description, phoneNumber: $phoneNumber, ratings: $ratings, reviews: $reviews, offers: $offers, scoialMediaLinks: $scoialMediaLinks, features: $features, openDuration: $openDuration, isFullTimeAccess: $isFullTimeAccess, userId: $serviceProviderId)';
   }
 
   @override
@@ -184,7 +184,7 @@ class GymModel {
         listEquals(other.features, features) &&
         listEquals(other.openDuration, openDuration) &&
         other.isFullTimeAccess == isFullTimeAccess &&
-        other.userId == userId;
+        other.serviceProviderId == serviceProviderId;
   }
 
   @override
@@ -204,7 +204,7 @@ class GymModel {
         features.hashCode ^
         openDuration.hashCode ^
         isFullTimeAccess.hashCode ^
-        userId.hashCode;
+        serviceProviderId.hashCode;
   }
 }
 

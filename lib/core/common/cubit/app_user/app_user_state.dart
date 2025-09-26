@@ -39,7 +39,9 @@ class AppUserState {
   final UserModel? user;
   final String? userIntialRoute;
   final String? errorMessage;
-  AppUserState({
+  final String? location;
+  AppUserState( {
+     this.location,
     required this.state,
     this.user,
     this.userIntialRoute,
@@ -51,8 +53,10 @@ class AppUserState {
     UserModel? user,
     String? errorMessage,
     String? userIntialRoute,
+    String? location,
   }) {
     return AppUserState(
+      location: location ?? this.location,
       state: state ?? this.state,
       user: user ?? this.user,
       errorMessage: errorMessage ?? this.errorMessage,
@@ -62,7 +66,7 @@ class AppUserState {
 
   @override
   String toString() =>
-      'AppUserState(state: $state, user: $user, errorMessage: $errorMessage )';
+      'AppUserState(state: $state, user: $user, location: $location, errorMessage: $errorMessage )';
 
   @override
   bool operator ==(covariant AppUserState other) {
@@ -70,9 +74,10 @@ class AppUserState {
 
     return other.state == state &&
         other.user == user &&
+        other.location == location &&
         other.errorMessage == errorMessage;
   }
 
   @override
-  int get hashCode => state.hashCode ^ user.hashCode ^ errorMessage.hashCode;
+  int get hashCode => state.hashCode ^ user.hashCode ^ location.hashCode ^ errorMessage.hashCode;
 }

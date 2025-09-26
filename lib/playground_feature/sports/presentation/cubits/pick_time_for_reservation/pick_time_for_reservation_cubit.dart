@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kamn/gym_feature/gyms/data/models/gym_reservation.dart';
 import 'package:kamn/playground_feature/sports/data/models/reservation_model.dart';
 import 'package:kamn/playground_feature/sports/data/repositories/sports_repository.dart';
 import 'package:kamn/playground_feature/sports/presentation/cubits/pick_time_for_reservation/pick_time_for_reservation_state.dart';
@@ -30,7 +31,7 @@ class PickTimeForReservationCubit extends Cubit<PickTimeForReservationState> {
     emit(state.copyWith(state: PickTimeForReservationStatus.intervalSelected));
   }
 
-  Future<void> onSubmitReservation(ReservationModel reservation) async {
+  Future<void> onSubmitReservation(GymReservation reservation) async {
     emit(state.copyWith(state: PickTimeForReservationStatus.loading));
     var response = await repository.submitReservation(reservation);
     response.fold((error) {
@@ -39,7 +40,7 @@ class PickTimeForReservationCubit extends Cubit<PickTimeForReservationState> {
           erorrMessage: error.erorr));
     }, (success) {
       emit(state.copyWith(
-          state: PickTimeForReservationStatus.success, reservation: success));
+          state: PickTimeForReservationStatus.success, ));
     });
   }
 

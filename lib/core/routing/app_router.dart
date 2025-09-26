@@ -6,6 +6,7 @@ import 'package:kamn/core/common/widget/slide_page_route.dart';
 import 'package:kamn/core/di/di.dart';
 import 'package:kamn/core/helpers/secure_storage_helper.dart';
 import 'package:kamn/core/routing/routes.dart';
+import 'package:kamn/gym_feature/add_gym/presentation/cubits/add_gym/add_gym_cubit.dart';
 import 'package:kamn/gym_feature/add_gym/presentation/cubits/create_gym_feature/create_gym_feature_cubit.dart';
 import 'package:kamn/gym_feature/add_gym/presentation/cubits/membership_offer/membership_offer_cubit.dart';
 import 'package:kamn/gym_feature/add_gym/presentation/screens/add_gym_screen.dart';
@@ -13,6 +14,10 @@ import 'package:kamn/gym_feature/add_gym/presentation/screens/create_gym_feature
 import 'package:kamn/gym_feature/add_gym/presentation/screens/membership_offer_screen.dart';
 import 'package:kamn/gym_feature/add_gym/presentation/cubits/track_submission/track_submission_cubit.dart';
 import 'package:kamn/gym_feature/add_gym/presentation/screens/select_plan_features_screen.dart';
+import 'package:kamn/gym_feature/gym_reservations/presentation/cubit/gym_reservations_cubit.dart';
+import 'package:kamn/gym_feature/gym_reservations/presentation/pages/gym_reservations_screen.dart';
+import 'package:kamn/gym_feature/gyms/data/models/gym_reservation.dart';
+import 'package:kamn/gym_feature/gyms/presentation/Cubit/gym_details/gymdetails_cubit.dart';
 import 'package:kamn/gym_feature/gyms/presentation/pages/gyms_screen.dart';
 import 'package:kamn/gym_feature/add_gym/presentation/screens/track_gym_request_submission_screen.dart';
 import 'package:kamn/main/presentation/cubit/bottom_nav_bar_cubit.dart';
@@ -93,39 +98,37 @@ class AppRouter {
       case Routes.editProfileScreen:
         return SlidePageRoute(
             page: BlocProvider(
-                  create: (context) => getIt<EditProfileCubit>(),
-                  child: const EditProfileScreen(),
-                ));
+          create: (context) => getIt<EditProfileCubit>(),
+          child: const EditProfileScreen(),
+        ));
       case Routes.myProfileScreen:
         return SlidePageRoute(page: const MyProfileScreen());
       case Routes.addServiceScreen:
         return SlidePageRoute(
             page: BlocProvider.value(
-                  value: getIt<AddServiceProviderCubit>(),
-                  child: AddServiceScreen(
-                    type: settings.arguments as String,
-                  ),
-                ));
+          value: getIt<AddServiceProviderCubit>(),
+          child: AddServiceScreen(
+            type: settings.arguments as String,
+          ),
+        ));
 
       case Routes.selectCategoryScreen:
         return SlidePageRoute(
             page: BlocProvider(
-                  create: (context) =>
-                      getIt<SelectCategoryCubit>()..getPlaygrounds(),
-                  child: const SelectCategoryScreen(),
-                ));
+          create: (context) => getIt<SelectCategoryCubit>()..getPlaygrounds(),
+          child: const SelectCategoryScreen(),
+        ));
 
       case Routes.groundsScreen:
         return SlidePageRoute(
             page: BlocProvider(
-                  create: (_) => getIt<SportsGroundsCubit>()
-                    ..passFilteredPlaygrounds(
-                        (settings.arguments as CategoryData).data)
-                    ..getUserLocation(),
-                  child: GroundsScreen(
-                    title: (settings.arguments as CategoryData).title,
-                  ),
-                ));
+          create: (_) => getIt<SportsGroundsCubit>()
+            ..passFilteredPlaygrounds((settings.arguments as CategoryData).data)
+            ..getUserLocation(),
+          child: GroundsScreen(
+            title: (settings.arguments as CategoryData).title,
+          ),
+        ));
       case Routes.debitCreditCardPage:
         return SlidePageRoute(
             page: DebitCreditCardScreen(
@@ -133,24 +136,21 @@ class AppRouter {
       case Routes.trackGroundResrvations:
         return SlidePageRoute(
             page: BlocProvider<TrackGroundReservationsCubit>(
-                  create: (context) => getIt<TrackGroundReservationsCubit>()
-                    ..getPlaygroundsByOwnerId(
-                        context.read<AppUserCubit>().state.user!.uid),
-                  child: const TrackGroundReservationsScreen(),
-                ));
+          create: (context) => getIt<TrackGroundReservationsCubit>()
+            ..getPlaygroundsByOwnerId(
+                context.read<AppUserCubit>().state.user!.uid),
+          child: const TrackGroundReservationsScreen(),
+        ));
       case Routes.trackGroundResrvationsDetail:
         return SlidePageRoute(
-            page: 
-                BlocProvider<TrackGroundReservationsDetailsCubit>(
-                  create: (context) =>
-                      getIt<TrackGroundReservationsDetailsCubit>()
-                        ..getPlaygroundsReservationDetailsById(
-                            (settings.arguments as PlaygroundModel)
-                                .playgroundId!),
-                  child: TrackGroundReservationDetail(
-                    playgroundModel: settings.arguments as PlaygroundModel,
-                  ),
-                ));
+            page: BlocProvider<TrackGroundReservationsDetailsCubit>(
+          create: (context) => getIt<TrackGroundReservationsDetailsCubit>()
+            ..getPlaygroundsReservationDetailsById(
+                (settings.arguments as PlaygroundModel).playgroundId!),
+          child: TrackGroundReservationDetail(
+            playgroundModel: settings.arguments as PlaygroundModel,
+          ),
+        ));
 
       case Routes.chooseServiceCategoryScreen:
         return MaterialPageRoute(
@@ -182,6 +182,15 @@ class AppRouter {
                   create: (context) => getIt<SignInCubit>(),
                   child: const SignInScreen(),
                 ));
+      case Routes.gymReservationsScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => getIt<GymReservationsCubit>()
+              ..fetchUserReservations(
+                  context.read<AppUserCubit>().state.user!.uid),
+            child: GymReservationsScreen(),
+          ),
+        );
       case Routes.signUpScreen:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
@@ -245,14 +254,14 @@ class AppRouter {
             builder: (context) => BlocProvider<PaymentOptionsCubit>(
                   create: (context) => PaymentOptionsCubit(),
                   child: PaymentOptionsScreen(
-                      reservationModel: settings.arguments as ReservationModel),
+                      reservationModel: settings.arguments as GymReservation),
                 ));
       case Routes.proceedPaymentScreen:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                   create: (context) => getIt<ProccedPaymentCubit>(),
                   child: ProceedPaymentScreen(
-                    reservationModel: settings.arguments as ReservationModel,
+                    reservationModel: settings.arguments as GymReservation,
                   ),
                 ));
       case Routes.logOut:
@@ -310,9 +319,17 @@ class AppRouter {
 
       /// GYM Features
       case Routes.addGymScreen:
-        return MaterialPageRoute(builder: (context) => const AddGymScreen());
+        return MaterialPageRoute(
+            builder: (context) => BlocProvider(
+                  create: (context) => getIt<AddGymCubit>(),
+                  child: const AddGymScreen(),
+                ));
       case Routes.gymScreen:
-        return MaterialPageRoute(builder: (context) => const GymsScreen());
+        return MaterialPageRoute(
+            builder: (context) => BlocProvider(
+                  create: (context) => getIt<GymDetailsCubit>()..fetchAllGyms(),
+                  child: const GymsScreen(),
+                ));
       case Routes.trackGymSubmission:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
@@ -352,9 +369,9 @@ class AppRouter {
       case Routes.mainScreen:
         return SlidePageRoute(
             page: BlocProvider(
-        create: (context) => getIt<BottomNavBarCubit>(),
-              child: const HomeMainInterface(),
-            ));
+          create: (context) => getIt<BottomNavBarCubit>(),
+          child: const HomeMainInterface(),
+        ));
 
       default:
         return MaterialPageRoute(
