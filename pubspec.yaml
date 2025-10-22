@@ -57,7 +57,7 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   geolocator: ^13.0.2
   google_sign_in: ^6.2.2
-  firebase_analytics: ^11.3.6
+  firebase_analytics: ^11.6.0
   firebase_remote_config: ^5.2.0
   firebase_crashlytics: ^4.2.0
   upgrader: ^11.3.1
@@ -72,6 +72,11 @@ dependencies:
   readmore: ^3.0.0
   sliver_snap: ^2.1.0
   
+ 
+
+dependency_overrides:
+  device_info_plus: ^11.5.0
+  package_info_plus: ^8.3.0
 
 dev_dependencies:
   flutter_test:
